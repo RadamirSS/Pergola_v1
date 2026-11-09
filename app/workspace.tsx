@@ -32,7 +32,7 @@ export default function Workspace() {
   const [opened, setOpened] = useState<Quote | null>(null); const [search, setSearch] = useState(''); const [filter, setFilter] = useState('all');
   const [modelSearch, setModelSearch] = useState(''); const [token, setToken] = useState('');
   const [companyDraft, setCompanyDraft] = useState<Company>(defaultCompany);
-  const [reviewId, setReviewId] = useState('california');const [reviewNote, setReviewNote] = useState('');const [reviewStatus, setReviewStatus] = useState<'checked' | 'pending'>('pending');
+  const [reviewId, setReviewId] = useState('california');const [reviewNote, setReviewNote] = useState('');const [reviewStatus, setReviewStatus] = useState<'checked' | 'pending'>('checked');
   const importRef = useRef<HTMLInputElement>(null); const requestKey = useRef('');
   const [quotesLoading, setQuotesLoading] = useState(false);
   async function load() {
@@ -43,6 +43,12 @@ export default function Workspace() {
   useEffect(() => { void load(); }, []);
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(''), 4500); return () => clearTimeout(t); }, [toast]);
   useEffect(() => { requestKey.current = ''; }, [selection, client]);
+  useEffect(() => {
+    if (!workspace) return;
+    const reviewed = workspace.catalog.products.find(p => p.id === reviewId);
+    setReviewStatus(workspace.reviews[reviewId]?.status ?? reviewed?.review ?? 'pending');
+    setReviewNote(workspace.reviews[reviewId]?.note ?? '');
+  }, [workspace, reviewId]);
   async function loadQuotes() {
     setQuotesLoading(true);
     try { const data = await api<{ quotes: Quote[] }>('/api/quotes'); setQuotes(data.quotes); } catch(e) { setError((e as Error).message); } finally { setQuotesLoading(false); }
@@ -79,6 +85,7 @@ export default function Workspace() {
     try {
       if(!requestKey.current) requestKey.current=crypto.randomUUID();
       const {quote}=await api<{quote:Quote}>('/api/quotes',{method:'POST',body:JSON.stringify({selection,client,issue,requestKey:requestKey.current})});
+      requestKey.current = '';
       setOpened(quote);setTab('history');setToast('Documento salvato nell’archivio.');
     } catch(e) {setError((e as Error).message);} finally {setBusy(false);}
   }
