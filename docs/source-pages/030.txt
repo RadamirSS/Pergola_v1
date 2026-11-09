@@ -1,0 +1,50 @@
+6000
+UNI
+retrò EN 13561
+Tenda a bracci laterali con sporgenza uguale all’ingombro. Struttura dotata di bracci laterali in alluminio
+preverniciato, comprensivo di molle di tensionamento, applicabili a muro. Esige ancoraggio a parete o a soffitto e
+può essere montata su prospetti di ville e negozi. Il comando è ad argano e permette di bloccarne l’apertura della
+tenda a qualsiasi altezza. La tenda viene fornita con mantovana.
+COLORI
+PER LA RICHIESTA DI ALTRI COLORI CHIEDERE PREVENTIVO
+DATI TECNICI
+170
+131 210
+228
+119,5
+210
+127
+STAFFA VISTA FRONTALE STAFFA A PARETE 131
+STAFFA A SOFFITTO
+15
+100 131
+INGOMBRO
+50
+STAFFA VISTA POSTERIORE
+64
+95
+BIANCO (RAL 9010) NERO (RAL 9005)
+AVORIO (RAL 1013) GRIGIO (RAL 7035)
+170
+210
+TERMINALE
+95
+46
+131
+119,5
+012
+127
+001
+131
+131
+50
+822
+170
+210
+100
+28
+49
+INGOMBRO
+con cassoneto
+STAFFA INTERNO VANO
+30

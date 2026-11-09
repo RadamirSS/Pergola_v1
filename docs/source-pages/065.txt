@@ -1,0 +1,63 @@
+Larghezza
+Sporgenza
+600 700 800 900 1000 1100 1200
+400 5590 5780 6060 7950 8520 8720 9000
+bracci 2 2 2 3 3 3 3
+staffe 4 4 5 5 6 6 7
+450 5790 5990 6290 8250 8830 9040 9325
+bracci 2 2 2 3 3 3 3
+staffe 4 4 5 5 6 6 7
+500 5990 6210 6510 8550 9140 9360 9660
+bracci 2 2 2 3 3 3 3
+staffe 4 4 5 5 6 6 7
+550 6190 6420 6730 8850 9460 9680 9990
+bracci 2 2 2 3 3 3 3
+staffe 4 4 5 5 6 6 7
+LA SPORGENZA DEVE ESSERE ALMENO 50cm INFERIORE ALLA LARGHEZZA
+Variazioni tessuti Supplementi
+• Reverse - Resinati - StarLight Resinato +20%
+• Staffa a soffitto Euro 60,00 a pezzo
+• Soltis +25%
+• Liberty - Tempotest StarLight +10%
+• PVC stampato - Pvc microforato (MESH) +10%
+• Tessuto fuori campionario +10%
+• Tessuto Tempotest Seta Cruda +5%
+• Telo simmetrico +10%
+• PVC Tinta unita Precontraint 302 Giovanardi +10%
+• Cucitura con cotone TENARA +5%
+Per tende realizzate con tessuto grande altezze (degradè) verrà inserito il rinforzo laterale
+Per la scelta di accessori abbinabili ai Motori Nice consultare pag.
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+ENOIZAZZIROTOM
+EDNET
+CI
+Modelli Accessori abbinabili al motore
+Motore Standard Motore con Soccorso Kit Centralina e Telecomando EURO 120,00
+EURO 240,00 EURO 290,00 IcTende Smart ( per domotica) EURO 132,00
+Motore Radio fine corsa meccanico EURO 340,00
+Sensore Sole Vento EURO 120,00
+Motore Radio fine corsa elettronico EURO 400,00 Oscillometro EURO 100,00
+Motore Radio con Soccorso EURO 390,00
+ENOIZAZZIROTOM
+ECIN
+Modelli Accessori abbinabili al motore
+Centralina TT1 EURO 130,0
+Motore Standard Motore con Soccorso
+Centralina TT3 EURO 90,00 EURO 270,00 EURO 380,00
+Centralina TT4 EURO 160,00
+Sensore Vento EURO 70,00
+Motore Radio fine corsa elettronico Motore Radio con Soccorso Sensore Sole Vento EURO 100,00
+EURO 450,00 EURO 540,00 Sensore Sole Vento Pioggia EURO 310,00
+Oscillometro EURO 140,00
+ENOIZAZZIROTOM
+INIBUREHC
+Modelli Accessori abbinabili al motore
+Motore Standard Motore con Soccorso
+Kit Centralina e Telecomando EURO 210,00
+EURO 310,00 EURO 400,00
+Motore Radio fine corsa meccanico EURO 465,00
+Sensore Vento EURO 130,00
+Motore Radio fine corsa elettronico EURO 510,00 Sensore Sole Vento EURO 160,00
+Oscillometro EURO 160,00
+Motore Radio con Soccorso EURO 500,00
+65

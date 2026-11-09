@@ -1,0 +1,667 @@
+{
+  "source": {
+    "name": "DOC-20260808-WA0021_261109_221634.pdf",
+    "sha256": "c5505d624e60a90dcec7b188b979ce8d991857abddc5c95fd522d9cc7d06abf2",
+    "pages": 257,
+    "edition": "Listino IC Tende 2023 · validità prezzi da confermare"
+  },
+  "products": 133,
+  "tables": [
+    {
+      "id": "california",
+      "pages": [
+        51
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "checked"
+    },
+    {
+      "id": "malta",
+      "pages": [
+        53
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "caraibi",
+      "pages": [
+        55
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "austria",
+      "pages": [
+        57
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "mexico",
+      "pages": [
+        59
+      ],
+      "variants": 1,
+      "cells": 80,
+      "status": "pending"
+    },
+    {
+      "id": "europa",
+      "pages": [
+        61
+      ],
+      "variants": 1,
+      "cells": 50,
+      "status": "pending"
+    },
+    {
+      "id": "mexico-plus",
+      "pages": [
+        63
+      ],
+      "variants": 1,
+      "cells": 38,
+      "status": "pending"
+    },
+    {
+      "id": "hollywoodiana",
+      "pages": [
+        65
+      ],
+      "variants": 1,
+      "cells": 28,
+      "status": "pending"
+    },
+    {
+      "id": "marcesa-300",
+      "pages": [
+        67
+      ],
+      "variants": 1,
+      "cells": 25,
+      "status": "pending"
+    },
+    {
+      "id": "new-orly",
+      "pages": [
+        69
+      ],
+      "variants": 1,
+      "cells": 22,
+      "status": "pending"
+    },
+    {
+      "id": "olanda",
+      "pages": [
+        71
+      ],
+      "variants": 2,
+      "cells": 58,
+      "status": "pending"
+    },
+    {
+      "id": "maximus",
+      "pages": [
+        73
+      ],
+      "variants": 1,
+      "cells": 20,
+      "status": "pending"
+    },
+    {
+      "id": "elite",
+      "pages": [
+        75
+      ],
+      "variants": 1,
+      "cells": 15,
+      "status": "pending"
+    },
+    {
+      "id": "riobox-400",
+      "pages": [
+        77
+      ],
+      "variants": 2,
+      "cells": 60,
+      "status": "pending"
+    },
+    {
+      "id": "dubai-350",
+      "pages": [
+        79
+      ],
+      "variants": 2,
+      "cells": 48,
+      "status": "pending"
+    },
+    {
+      "id": "barcellona",
+      "pages": [
+        81
+      ],
+      "variants": 1,
+      "cells": 38,
+      "status": "pending"
+    },
+    {
+      "id": "barcellona-sombrex",
+      "pages": [
+        83
+      ],
+      "variants": 1,
+      "cells": 38,
+      "status": "pending"
+    },
+    {
+      "id": "3000",
+      "pages": [
+        15
+      ],
+      "variants": 1,
+      "cells": 24,
+      "status": "pending"
+    },
+    {
+      "id": "5000",
+      "pages": [
+        17
+      ],
+      "variants": 2,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "3000-con-cavetti-senza-cassonetto",
+      "pages": [
+        19
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "3000-con-cavetti-e-cassonetto",
+      "pages": [
+        21
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "3000-con-guide",
+      "pages": [
+        23
+      ],
+      "variants": 1,
+      "cells": 36,
+      "status": "pending"
+    },
+    {
+      "id": "7000",
+      "pages": [
+        25
+      ],
+      "variants": 2,
+      "cells": 40,
+      "status": "pending"
+    },
+    {
+      "id": "t4-con-cassonetto",
+      "pages": [
+        27
+      ],
+      "variants": 1,
+      "cells": 16,
+      "status": "pending"
+    },
+    {
+      "id": "t4-senza-cassonetto",
+      "pages": [
+        29
+      ],
+      "variants": 1,
+      "cells": 16,
+      "status": "pending"
+    },
+    {
+      "id": "6000-retro",
+      "pages": [
+        31
+      ],
+      "variants": 1,
+      "cells": 35,
+      "status": "pending"
+    },
+    {
+      "id": "inox",
+      "pages": [
+        33
+      ],
+      "variants": 1,
+      "cells": 40,
+      "status": "pending"
+    },
+    {
+      "id": "classique",
+      "pages": [
+        35
+      ],
+      "variants": 1,
+      "cells": 24,
+      "status": "pending"
+    },
+    {
+      "id": "crystal",
+      "pages": [
+        37
+      ],
+      "variants": 1,
+      "cells": 28,
+      "status": "pending"
+    },
+    {
+      "id": "balaustra-autoportante",
+      "pages": [
+        39
+      ],
+      "variants": 1,
+      "cells": 15,
+      "status": "pending"
+    },
+    {
+      "id": "balaustra",
+      "pages": [
+        41
+      ],
+      "variants": 1,
+      "cells": 21,
+      "status": "pending"
+    },
+    {
+      "id": "balaustra-con-cornice",
+      "pages": [
+        43
+      ],
+      "variants": 1,
+      "cells": 21,
+      "status": "pending"
+    },
+    {
+      "id": "callas-zip",
+      "pages": [
+        45
+      ],
+      "variants": 1,
+      "cells": 21,
+      "status": "pending"
+    },
+    {
+      "id": "londra",
+      "pages": [
+        47
+      ],
+      "variants": 1,
+      "cells": 24,
+      "status": "pending"
+    },
+    {
+      "id": "america",
+      "pages": [
+        87
+      ],
+      "variants": 2,
+      "cells": 80,
+      "status": "pending"
+    },
+    {
+      "id": "maxi",
+      "pages": [
+        89
+      ],
+      "variants": 2,
+      "cells": 80,
+      "status": "pending"
+    },
+    {
+      "id": "maxi-con-telo-unico",
+      "pages": [
+        91
+      ],
+      "variants": 1,
+      "cells": 30,
+      "status": "pending"
+    },
+    {
+      "id": "mini",
+      "pages": [
+        93
+      ],
+      "variants": 1,
+      "cells": 16,
+      "status": "pending"
+    },
+    {
+      "id": "america-box",
+      "pages": [
+        95
+      ],
+      "variants": 2,
+      "cells": 80,
+      "status": "pending"
+    },
+    {
+      "id": "maxi-box",
+      "pages": [
+        97
+      ],
+      "variants": 2,
+      "cells": 80,
+      "status": "pending"
+    },
+    {
+      "id": "standard",
+      "pages": [
+        101
+      ],
+      "variants": 1,
+      "cells": 70,
+      "status": "pending"
+    },
+    {
+      "id": "prolungata",
+      "pages": [
+        103
+      ],
+      "variants": 1,
+      "cells": 70,
+      "status": "pending"
+    },
+    {
+      "id": "gradini",
+      "pages": [
+        105
+      ],
+      "variants": 2,
+      "cells": 78,
+      "status": "pending"
+    },
+    {
+      "id": "cupola",
+      "pages": [
+        107
+      ],
+      "variants": 1,
+      "cells": 63,
+      "status": "pending"
+    },
+    {
+      "id": "barletta",
+      "pages": [
+        109
+      ],
+      "variants": 1,
+      "cells": 70,
+      "status": "pending"
+    },
+    {
+      "id": "fissa",
+      "pages": [
+        111
+      ],
+      "variants": 1,
+      "cells": 30,
+      "status": "pending"
+    },
+    {
+      "id": "fissa-k35",
+      "pages": [
+        113
+      ],
+      "variants": 1,
+      "cells": 30,
+      "status": "pending"
+    },
+    {
+      "id": "new-millenium",
+      "pages": [
+        117
+      ],
+      "variants": 2,
+      "cells": 90,
+      "status": "pending"
+    },
+    {
+      "id": "nuvola",
+      "pages": [
+        119
+      ],
+      "variants": 2,
+      "cells": 120,
+      "status": "pending"
+    },
+    {
+      "id": "roll",
+      "pages": [
+        121
+      ],
+      "variants": 2,
+      "cells": 49,
+      "status": "pending"
+    },
+    {
+      "id": "summer-winter-addossata",
+      "pages": [
+        125,
+        126,
+        127
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "summer-winter-autoportante",
+      "pages": [
+        129,
+        130,
+        131
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "summer-winter-wood-addossata",
+      "pages": [
+        133,
+        134,
+        135
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "summer-winter-wood-autoportante",
+      "pages": [
+        137,
+        138,
+        139
+      ],
+      "variants": 2,
+      "cells": 135,
+      "status": "pending"
+    },
+    {
+      "id": "summer-winter-wings",
+      "pages": [
+        141,
+        142,
+        143
+      ],
+      "variants": 2,
+      "cells": 39,
+      "status": "pending"
+    },
+    {
+      "id": "summer-winter-veil",
+      "pages": [
+        145,
+        146,
+        147
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "minu-addossata",
+      "pages": [
+        149,
+        150,
+        151
+      ],
+      "variants": 2,
+      "cells": 117,
+      "status": "pending"
+    },
+    {
+      "id": "minu-autoportante",
+      "pages": [
+        153,
+        154,
+        155
+      ],
+      "variants": 2,
+      "cells": 135,
+      "status": "pending"
+    },
+    {
+      "id": "shine-addossata",
+      "pages": [
+        157,
+        158,
+        159
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "shine-autoportante",
+      "pages": [
+        161,
+        162,
+        163
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "master-addossata",
+      "pages": [
+        165,
+        166,
+        167
+      ],
+      "variants": 3,
+      "cells": 171,
+      "status": "pending"
+    },
+    {
+      "id": "master-autoportante",
+      "pages": [
+        169,
+        170,
+        171
+      ],
+      "variants": 2,
+      "cells": 135,
+      "status": "pending"
+    },
+    {
+      "id": "linear-addossata",
+      "pages": [
+        173,
+        174,
+        175
+      ],
+      "variants": 3,
+      "cells": 189,
+      "status": "pending"
+    },
+    {
+      "id": "linear-autoportante",
+      "pages": [
+        177,
+        178,
+        179
+      ],
+      "variants": 3,
+      "cells": 189,
+      "status": "pending"
+    },
+    {
+      "id": "klima-120-addossata",
+      "pages": [
+        181,
+        182,
+        183,
+        184,
+        185
+      ],
+      "variants": 4,
+      "cells": 784,
+      "status": "pending"
+    },
+    {
+      "id": "klima-120-autoportante",
+      "pages": [
+        187,
+        188,
+        189,
+        190,
+        191
+      ],
+      "variants": 3,
+      "cells": 636,
+      "status": "pending"
+    },
+    {
+      "id": "klima-200-addossata",
+      "pages": [
+        193,
+        194,
+        195,
+        196,
+        197
+      ],
+      "variants": 5,
+      "cells": 995,
+      "status": "pending"
+    },
+    {
+      "id": "klima-200-autoportante",
+      "pages": [
+        199,
+        200,
+        201,
+        202,
+        203
+      ],
+      "variants": 5,
+      "cells": 1009,
+      "status": "pending"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+Summer Winter Addossata
+3 Campate
+NB * MINIMA INCLINAZIONE UTILE 10%
+Larghezza
+NUMERO
+Sporgenza
+FRANGIVENTI
+950 1000 1050 1100 1150 1200
+300 11471 11549 11924 11989 12118 12222 5
+350 12947 13012 13504 13607 13750 13814 6
+400 13400 13478 14022 14268 14462 14604 7
+450 14306 14384 14967 15044 15213 15290 8
+500 14773 14850 15472 15562 15731 15795 9
+550 15666 16145 16430 16507 16689 16753 9
+600 16132 16611 16935 17025 17194 17271 10
+650 17051 17116 17893 17970 18152 18216 10
+700 18074 18178 19019 19149 19343 19446 11
+SUPPLEMENTI
+• Piantone 200x200 H 3 metri Euro 210,00 a piantone
+• Illuminazione con strip LED Euro 40,00 al mtl
+• Led inseriti nel piantone Euro320,00 a piantone
+(possibile solo fino a 9 m di larghezza)
+• Barra led “lumen” Euro 100,00 al mtl
+• Illuminazione con spot LED Euro 47,00 cadauno
+(solo sulla larghezza anteriore)
+• Telecomando Euro 200,00
+• Dispositivo IoT IcTende Smart Euro 18000
+NB IcTende Smart può essere utilizzato per ogni singola funzione
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+127

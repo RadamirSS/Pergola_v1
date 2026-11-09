@@ -1,0 +1,25 @@
+Summer Winter Veil
+1 Campata
+Larghezza
+NUMERO
+Sporgenza
+FRANGIVENTI
+300 350 400 450
+300 4630 4965 5005 5345 5
+350 5175 5561 5625 6015 6
+400 5345 5755 5820 6230 7
+450 5720 6150 6215 6650 8
+500 5885 6345 6405 6870 9
+550 6260 6740 6810 7283 9
+600 6430 6930 6995 7500 10
+650 6805 7330 7435 7920 10
+700 7140 7720 7810 8385 11
+SUPPLEMENTI
+• Illuminazione con strip LED Euro 36,00 al mtl
+(possibile solo fino a 9 m di larghezza)
+• Illuminazione con spot LED Euro 47,00 cadauno
+• Telecomando Euro 200,00
+• Dispositivo IoT Microbees Euro 180,00
+NB MicroBees può essere utilizzato per ogni singola funzione
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+145

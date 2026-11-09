@@ -1,0 +1,29 @@
+Master Addossata
+3 Campate
+Larghezza
+NUMERO
+Sporgenza
+FRANGIVENTI
+950 1000 1050 1100 1150 1200
+300 16740 16792 17401 17453 17660 18372 5
+350 18877 18967 19692 19783 20055 20158 6
+400 19550 19641 20443 20780 20819 20961 7
+450 20871 20974 21829 21958 22191 22295 8
+500 21544 21647 22580 22670 22942 24366 9
+550 22761 23460 23952 24056 24327 24431 9
+600 23447 24263 24703 24806 25182 25544 10
+650 24858 24962 26088 26231 26464 26580 10
+700 26360 26515 27732 27888 28212 28406 11
+SUPPLEMENTI
+• Piantone 200x200 H 3 metri Euro 210,00 a piantone
+• Illuminazione con strip LED Euro 40,00 al mtl
+• Led inseriti nel piantone Euro 320,00 a piantone
+(possibile solo fino a 9 m di larghezza)
+• Barra led “lumen” Euro 100,00 al mtl
+• Illuminazione con spot LED Euro 47,00 cadauno
+(solo sulla larghezza anteriore)
+• Telecomando Euro 200,00
+• Dispositivo IoT IcTende Smart Euro 180,00
+NB IcTende Smart può essere utilizzato per ogni singola funzione
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+167

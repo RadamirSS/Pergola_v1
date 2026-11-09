@@ -1,0 +1,36 @@
+Larghezza
+Sporgenza
+150 200 250 300 350 400 450 500 550 600
+80 350 390 410 450 490 530 780 850 930 1040
+100 410 430 480 510 560 590 860 940 1010 1110
+120 450 490 530 570 620 680 960 1040 1090 1220
+140 490 560 590 640 700 740 1070 1160 1230 1320
+160 570 620 680 720 760 840 1210 1270 1350 1440
+180 640 690 750 790 860 910 1350 1390 1450 1620
+200 690 820 850 880 950 990 1460 1520 1580 1710
+LE MISURE EVIDENZIATE IN ROSSO SONO PER TENDE REALIZZABILI ESCLUSIVAMENTE CON PROFILI K55
+Per cappottine cambio telo applicare sconto del 15% con armatura pulita, aumento di 16 euro se l’armatura è da pulire.
+Variazioni tessuti
+• Decor- Stilus - Moda +20%
+• Reverse - Resinati +20%
+• Soltis +25%
+• Liberty - Tempotest StarLight +10%
+• PVC stampato - Pvc microforato (MESH) +10%
+• Tessuto fuori campionario +10%
+• Tessuto Tempotest Seta Cruda +5%
+• Telo simmetrico +10%
+• PVC Tinta unita Precontraint 302 Giovanardi +10%
+• Tempotest StarLight resinato +25%
+• Cucitura con cotone TENARA +5%
+Supplementi
+• Kit motore normale per tenda cappottina Euro 250,00
+• Kit motore radiocomandato per tenda cappottina Euro 350,00
+• Comando ad argano Euro 55,00
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+002
+X
+Y
+X Sporgenza
+Y Ingombro
+La misura X sarà uguale alla misura Y
+101

@@ -1,0 +1,54 @@
+Larghezza
+Sporgenza
+150 200 250 300 350 400 450 500 550 600
+80 410 500 520 600 620 660 920 1010 1090 1200
+100 600 620 650 750 780 880 1130 1200 1290 1420
+120 660 690 810 830 950 930 1290 1390 1490 1610
+140 730 740 850 900 980 980 1420 1510 1610 1730
+160 820 860 930 1050 1110 1150 1560 1680 1890 1890
+180 880 970 1070 1140 1210 1300 1610 1710 1820 1960
+200 1100 1200 1320 1420 1480 1610 1730 1820 1920 2040
+Per cappottine cambio telo applicare sconto del 15% con armatura pulita, aumento di 16 euro se l’armatura è da pulire.
+Supplementi
+• Kit motore normale per tenda cappottina Euro 250,00
+• Kit motore radiocomandato per tenda cappottina Euro 350,00
+• Comando ad argano Euro 55,00
+Ingombro
+Sporgenza ( X )
+(Y)
+50 80(80) - - -
+60 90 (80) - - -
+70 90 (90) 100(85) - -
+80 100(100) 110(95) 120(105) -
+90 120(103) 130(130) 120 (110) -
+100 130(115) 140(148) 150 (145) -
+110 130(126) 140(130) 160 (140) -
+120 140(135) 150(135) 160 (152) 180 (145)
+130 180(155) - - -
+140 180(155) - - -
+Le misure tra parentesi indicano il primo profilo a parete
+X Sporgenza
+Y Ingombro
+N primo profilo a parete
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+002
+X
+Y
+002
+X
+Y
+LE MISURE EVIDENZIATE IN ROSSO SONO PER TENDE REALIZZABILI ESCLUSIVAMENTE CON PROFILI K55
+Variazioni tessuti
+• Decor- Stilus - Moda +20%
+• Reverse - Resinati +20%
+• Soltis +25%
+• Liberty - Tempotest StarLight +10%
+• PVC stampato - Pvc microforato (MESH) +10%
+• Tessuto fuori campionario +10%
+• Tessuto Tempotest Seta Cruda +5%
+• Telo simmetrico +10%
+• PVC Tinta unita Precontraint 302 Giovanardi +10%
+• Tempotest StarLight resinato +25%
+• Cucitura con cotone TENARA +5%
+N N
+103

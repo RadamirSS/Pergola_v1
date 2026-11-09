@@ -1,0 +1,30 @@
+Shine Addossata
+1 Campata
+NB * MINIMA INCLINAZIONE UTILE 10%
+Larghezza
+NUMERO
+Sporgenza
+FRANGIVENTI
+300 350 400 450
+300 5400 5800 5930 6230 5
+350 6035 6486 6580 7025 6
+400 6235 6720 6810 7265 7
+450 6710 7175 7290 7755 8
+500 6865 7395 7500 8010 9
+550 7305 7860 8005 8500 9
+600 7500 8080 8235 8750 10
+650 7940 8545 8700 9240 10
+700 8325 9000 9145 9310 11
+SUPPLEMENTI
+• Piantone 200x200 H 3 metri Euro 210,00 a piantone
+• Illuminazione con strip LED Euro 40,00 al mtl
+• Led inseriti nel piantone Euro320,00 a piantone
+(possibile solo fino a 9 m di larghezza)
+• Barra led “lumen” Euro 100,00 al mtl
+• Illuminazione con spot LED Euro 47,00 cadauno
+(solo sulla larghezza anteriore)
+• Telecomando Euro 200,00
+• Dispositivo IoT IcTende Smart Euro 180,00
+NB IcTende Smart può essere utilizzato per ogni singola funzione
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+157

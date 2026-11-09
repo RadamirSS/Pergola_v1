@@ -1,0 +1,55 @@
+Larghezza
+LED
+Sporgenza
+BRACCI
+750 800 850 900 950 1000 1050
+150 7298 7605 7946 8251 8556 8900 9205 -
+200 7320 7620 7966 8270 8575 8930 9230 + 1027
+250 7411 7716 8071 8376 8681 9040 9345 + 1109
+300 7545 7850 8215 8520 8825 9190 9495 + 1195
+350 7706 8015 8386 8690 8995 9370 9675 + 1303
+400 7875 8180 8560 8865 9170 9550 9855 + 1375
+3 BRACCI
+Cassonetto con led +1224 + 1224 + 1224 + 1224 + 1224 + 1224 + 1286
+Terminale con led
++ 1224 + 1224 + 1224 + 1224 + 1224 + 1224 + 1286
+Larghezza
+LED
+Sporgenza
+BRACCI
+1100 1150 1200
+175 10295 10600 10945 -
+200 10330 10640 10980 + 1368
+250 10460 10765 11305 + 1478
+300 10635 10940 11360 + 1594
+350 10845 11150 11520 + 1738
+400 11060 11365 11741 + 1834
+4 BRACCI
+Cassonetto con led + 1290 + 1290 + 1290
+Terminale con led
++ 1290 + 1290 + 1290
+Per la scelta di accessori abbinabili ai Motori Nice consultare pag.
+Tale tenda è realizzata soltanto con motore con fine corsa elettronico in modo da non forare i cassonetti
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+ENOIZAZZIROTOM
+EDNET
+CI
+Modelli Accessori abbinabili al motore
+Motore Radio fine corsa elettronico Motore Radio con Soccorso Sensore Sole Vento EURO 120,00
+EURO 280,00 EURO 270,00 Oscillometro EURO 100,00
+ENOIZAZZIROTOM
+ECIN
+Modelli Accessori abbinabili al motore
+Sensore Vento EURO 70,00
+Motore Radio fine corsa elettronico Motore Radio con Soccorso Sensore Sole Vento EURO 100,00
+EURO 330,00 EURO 420,00 Sensore Sole Vento Pioggia EURO 310,00
+Oscillometro EURO 140,00
+ENOIZAZZIROTOM
+INIBUREHC
+Modelli Accessori abbinabili al motore
+Sensore Vento EURO 130,00
+Motore Radio fine corsa elettronico Motore Radio con Soccorso
+Sensore Sole Vento EURO 160,00
+EURO 390,00 EURO 380,00
+Oscillometro EURO 160,00
+77

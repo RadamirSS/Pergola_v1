@@ -1,0 +1,30 @@
+Summer Winter Autoportante
+1 Campata
+NB * MINIMA INCLINAZIONE UTILE 10%
+Larghezza
+NUMERO
+Sporgenza
+FRANGIVENTI
+300 350 400 450
+300 5399 5787 5826 6228 5
+350 6033 6486 6564 7017 6
+400 6228 6707 6784 7263 7
+450 6668 7173 7250 7755 8
+500 6862 7393 7470 8001 9
+550 7302 7859 7937 8493 9
+600 7496 8079 8157 8739 10
+650 7937 8545 8662 9231 10
+700 8325 8998 9115 9775 11
+SUPPLEMENTI
+• Piantone 200x200 H 3 metri Euro 210,00 a piantone
+• Illuminazione con strip LED Euro 40,00 al mtl
+• Led inseriti nel piantone Euro320,00 a piantone
+(possibile solo fino a 9 m di larghezza)
+• Barra led “lumen” Euro 100,00 al mtl
+• Illuminazione con spot LED Euro 47,00 cadauno
+(solo sulla larghezza anteriore)
+• Telecomando Euro 200,00
+• Dispositivo IoT IcTende Smart Euro 18000
+NB IcTende Smart può essere utilizzato per ogni singola funzione
+TUTTI I PREZZI SI INTENDONO IVA ESCLUSA 22%
+129

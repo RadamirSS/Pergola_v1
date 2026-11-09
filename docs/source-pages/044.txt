@@ -1,0 +1,25 @@
+Callas Zip
+UNI
+EN 13561
+Tenda ermetica con un sistema di blocco/sblocco automatico, quando il terminale entra in fondo, entra in azione
+un meccanismo che incastra il terminale nel piede e consente di mettere in tensione il tessuto. Per aprire la tenda,
+si rilascia il tessuto e il meccanismo si sblocca. Le guide laterali sono apribili ed ispezionabili, il tessuto rimane teso
+all’interno delle guide per la spinta di molle. Il cassonetto superiore, oltre a permettere di inserire una tenda interna,
+è apribile affinchè il tessuto possa essere cambiato senza smontare la tenda. Si tratta di un sistema autoportante o
+che può essere preassemblato e poi installato. Fornita con comando manuale ad argano(di serie) o motorizzata.
+COLORI
+BIANCO (RAL 9010)
+PER LA RICHIESTA DI ALTRI COLORI CHIEDERE PREVENTIVO
+DATI TECNICI
+85 120
+44
+GUIDA 141,5 130
+61.5
+CASSONETTO
+3030
+TERMINA
+5,16
+58
+120
+44 5,141 031
+44
