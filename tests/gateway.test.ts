@@ -5,7 +5,7 @@ import { authenticated, proxy, signIn } from '../vercel/lib/gateway.ts';
 test('gateway requires authentication, issues expiring signed cookies and blocks cross-origin writes', async () => {
   process.env.ADMIN_TOKEN = 'test-only-access-secret';
   const request = (path: string, options?: RequestInit) => new Request(`https://pergola.example${path}`, options);
-  assert.equal((await proxy(request('/api/workspace'))).status, 401);
+  assert.equal((await proxy(request('/api/manage/workspace'))).status, 401);
   assert.equal((await signIn(request('/api/session', { method: 'POST', body: JSON.stringify({ token: 'wrong' }) }))).status, 401);
   const login = await signIn(request('/api/session', { method: 'POST', headers: { Origin: 'https://pergola.example' }, body: JSON.stringify({ token: process.env.ADMIN_TOKEN }) }));
   assert.equal(login.status, 200);
@@ -35,7 +35,7 @@ test('gateway forwards only allowed API paths, keeps credentials private and str
       seen = true;
       return new Response('%PDF-test', { headers: { 'Content-Type': 'application/pdf', 'Content-Disposition': 'attachment; filename="test.pdf"', 'Set-Cookie': 'upstream-secret=hidden' } });
     };
-    const response = await proxy(new Request('https://pergola.example/api/quotes/7/pdf', { headers: { Authorization: `Bearer ${process.env.ADMIN_TOKEN}`, Cookie: 'unrelated=value' } }));
+    const response = await proxy(new Request('https://pergola.example/api/manage/quotes/7/pdf', { headers: { Authorization: `Bearer ${process.env.ADMIN_TOKEN}`, Cookie: 'unrelated=value' } }));
     assert.equal(seen, true);
     assert.equal(await response.text(), '%PDF-test');
     assert.match(response.headers.get('content-type')!, /pdf/);
@@ -43,6 +43,6 @@ test('gateway forwards only allowed API paths, keeps credentials private and str
     assert.equal(response.headers.get('oai-sites-authorization'), null);
     assert.equal((await proxy(new Request('https://pergola.example/api/unknown'))).status, 404);
     globalThis.fetch = async () => new Response(null, { status: 302, headers: { location: 'https://login.example' } });
-    assert.equal((await proxy(new Request('https://pergola.example/api/workspace', { headers: { Authorization: `Bearer ${process.env.ADMIN_TOKEN}` } }))).status, 502);
+    assert.equal((await proxy(new Request('https://pergola.example/api/manage/workspace', { headers: { Authorization: `Bearer ${process.env.ADMIN_TOKEN}` } }))).status, 502);
   } finally { globalThis.fetch = original; }
 });

@@ -2,19 +2,30 @@ import { env } from 'cloudflare:workers';
 import catalogData from '../data/catalog.json';
 import { defaultCompany } from './pricing';
 import type { Catalog, Company, Quote, ReviewOverride } from './types';
+import { guestOwner, guestSelectionAllowed, ownerScope } from './guest-policy';
+import type { Selection } from './types';
 
-type RuntimeEnv = Cloudflare.Env & { PERGOLA_ACCESS?: string; ADMIN_TOKEN?: string };
+type RuntimeEnv = Cloudflare.Env & { PERGOLA_ACCESS?: string; ADMIN_TOKEN?: string; PERGOLA_GATEWAY_TOKEN?: string };
 export class HttpError extends Error { constructor(public status: number, message: string) { super(message); } }
 export function database() { if (!env.DB) throw new HttpError(503, 'Archivio non disponibile. Contattare l’amministratore.'); return env.DB; }
 /** owner-private is set only behind the private Sites gateway. Standalone uses ADMIN_TOKEN. */
 export function authorize(request: Request): string {
   const config = env as RuntimeEnv;
+  if (request.headers.has('x-pergola-guest')) {
+    const owner = guestOwner(config.PERGOLA_GATEWAY_TOKEN, request.headers.get('x-pergola-gateway'), request.headers.get('x-pergola-guest'));
+    if (!owner) throw new HttpError(401, 'Sessione cliente non valida.');
+    return owner;
+  }
   if (import.meta.env.DEV) return 'local-development';
   if (config.PERGOLA_ACCESS === 'owner-private') return request.headers.get('oai-authenticated-user-id') ?? 'private-workspace';
   const bearer = request.headers.get('authorization')?.replace(/^Bearer /,'');
   const cookie = request.headers.get('cookie')?.split('; ').find(c => c.startsWith('pergola_admin='))?.slice(14);
   if (config.ADMIN_TOKEN && (bearer === config.ADMIN_TOKEN || cookie === config.ADMIN_TOKEN)) return 'administrator';
   throw new HttpError(401, 'Accedere all’area di lavoro per continuare.');
+}
+export function quoteScope(request: Request) { return ownerScope(authorize(request)); }
+export function checkGuestSelection(request: Request, selection: Selection, issue = false) {
+  if (!guestSelectionAllowed(authorize(request), selection, issue)) throw new HttpError(403, 'Sconti, posa, trasporto ed emissione sono riservati al rivenditore.');
 }
 export function mutationGuard(request: Request) {
   authorize(request);

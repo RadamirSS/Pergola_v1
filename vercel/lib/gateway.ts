@@ -1,4 +1,4 @@
-import { createHmac, createHash, timingSafeEqual } from 'node:crypto';
+import { createHmac, createHash, timingSafeEqual, randomUUID } from 'node:crypto';
 
 const cookieName = 'pergola_session';
 const lifetime = 12 * 60 * 60;
@@ -42,18 +42,33 @@ export async function signIn(request: Request) {
     'Set-Cookie': `${cookieName}=${expiry}.${signature(expiry)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${lifetime}`,
   } });
 }
-/** Vercel terminates the browser session; only the server knows the D1 service credential. */
+const guestCookieName = 'pergola_visitor';
+const guestLifetime = 365 * 86400;
+export function visitorSession(request: Request): { id: string; cookie?: string } {
+  const cookie = request.headers.get('cookie')?.split(';').map(c => c.trim()).find(c => c.startsWith(`${guestCookieName}=`))?.slice(guestCookieName.length + 1);
+  const [id, expiry, signed, extra] = cookie?.split('.') ?? [];
+  const now = Math.floor(Date.now() / 1000);
+  if (!extra && id && /^[a-f0-9-]{36}$/.test(id) && Number.isSafeInteger(Number(expiry)) && Number(expiry) > now && Number(expiry) <= now + guestLifetime && signed && equal(signed, signature(`guest:${id}.${expiry}`))) return { id };
+  const nextId = randomUUID(), nextExpiry = String(now + guestLifetime);
+  return { id: nextId, cookie: `${guestCookieName}=${nextId}.${nextExpiry}.${signature(`guest:${nextId}.${nextExpiry}`)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${guestLifetime}` };
+}
+/** Public guests have isolated archives; administrative requests use a separate prefix and session. */
 export async function proxy(request: Request) {
   const incoming = new URL(request.url);
-  if (!allowed.test(incoming.pathname)) return problem(404, 'Risorsa non trovata.');
-  if (!authenticated(request)) return problem(401, 'Inserisci il codice di accesso amministratore per continuare.');
+  const admin = incoming.pathname.startsWith('/api/manage/');
+  const path = admin ? incoming.pathname.replace('/api/manage/', '/api/') : incoming.pathname;
+  if (!allowed.test(path)) return problem(404, 'Risorsa non trovata.');
+  if (admin && !authenticated(request)) return problem(401, 'Inserisci il codice di accesso amministratore per continuare.');
+  if (!admin && path === '/api/admin') return problem(403, 'Area riservata al rivenditore.');
   if (!['GET', 'POST', 'PUT', 'PATCH'].includes(request.method)) return problem(405, 'Metodo non consentito.');
   if (request.method !== 'GET' && !sameOrigin(request)) return problem(403, 'Origine non consentita.');
   const backend = process.env.PERGOLA_BACKEND_URL;
   const credential = process.env.PERGOLA_BACKEND_TOKEN;
-  if (!backend || !credential) return problem(503, 'Archivio non configurato.');
+  const gateway = process.env.PERGOLA_GATEWAY_TOKEN;
+  if (!backend || !credential || !process.env.ADMIN_TOKEN || (!admin && !gateway)) return problem(503, 'Archivio non configurato.');
   try {
-    const destination = new URL(incoming.pathname + incoming.search, backend);
+    const visitor = admin ? null : visitorSession(request);
+    const destination = new URL(path + incoming.search, backend);
     if (destination.protocol !== 'https:' || destination.origin !== new URL(backend).origin) return problem(503, 'Archivio non configurato.');
     let body: string | undefined;
     if (request.method !== 'GET') {
@@ -61,13 +76,14 @@ export async function proxy(request: Request) {
       body = await request.text();
       if (Buffer.byteLength(body) > 3000000) return problem(413, 'Il file supera il limite di 3 MB.');
     }
+    const serviceHeaders: Record<string, string> = { 'Content-Type': 'application/json', 'Origin': destination.origin, 'OAI-Sites-Authorization': `Bearer ${credential}` };
+    if (visitor) { serviceHeaders['X-Pergola-Guest'] = visitor.id; serviceHeaders['X-Pergola-Gateway'] = gateway!; }
     const upstream = await fetch(destination, {
-      method: request.method, body, cache: 'no-store', redirect: 'manual', signal: AbortSignal.timeout(45000),
-      headers: { 'Content-Type': 'application/json', 'Origin': destination.origin, 'OAI-Sites-Authorization': `Bearer ${credential}` },
+      method: request.method, body, cache: 'no-store', redirect: 'manual', signal: AbortSignal.timeout(45000), headers: serviceHeaders,
     });
-    // Redirects or an HTML login screen mean service authentication failed.
     if (upstream.status >= 300 && upstream.status < 400 || upstream.headers.get('content-type')?.includes('text/html')) return problem(502, 'Connessione all’archivio non disponibile.');
     const headers = new Headers({ 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+    if (visitor?.cookie) headers.set('Set-Cookie', visitor.cookie);
     for (const key of ['content-type', 'content-disposition']) {
       const value = upstream.headers.get(key); if (value) headers.set(key, value);
     }

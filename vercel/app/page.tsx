@@ -1,2 +1,2 @@
 import Workspace from '../../app/workspace';
-export default function Home() { return <Workspace chatGPTSignIn={false} />; }
+export default function Home() { return <Workspace chatGPTSignIn={false} publicMode />; }
