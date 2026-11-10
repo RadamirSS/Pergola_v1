@@ -3,7 +3,7 @@ import "./globals.css";
 import { I18nProvider } from '../lib/i18n/provider';
 
 export const metadata: Metadata = {
-  title: "Pergola — Configuratore IC Tende",
+  title: "IC Tende — Configuratore",
   description: "Configura tende, pergole e schermature su misura. Prezzi dal catalogo IC Tende, preventivi e archivio condiviso.",
   icons: {
     icon: "/favicon.svg",
