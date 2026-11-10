@@ -1,4 +1,6 @@
 import { createHmac, createHash, timingSafeEqual, randomUUID } from 'node:crypto';
+import { normalizeLocale, translateText } from '../../lib/i18n/index.ts';
+import type { Quote } from '../../lib/types';
 
 const cookieName = 'pergola_session';
 const lifetime = 12 * 60 * 60;
@@ -53,7 +55,7 @@ export function visitorSession(request: Request): { id: string; cookie?: string 
   return { id: nextId, cookie: `${guestCookieName}=${nextId}.${nextExpiry}.${signature(`guest:${nextId}.${nextExpiry}`)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${guestLifetime}` };
 }
 /** Public guests have isolated archives; administrative requests use a separate prefix and session. */
-export async function proxy(request: Request) {
+async function proxyRequest(request: Request) {
   const incoming = new URL(request.url);
   const admin = incoming.pathname.startsWith('/api/manage/');
   const path = admin ? incoming.pathname.replace('/api/manage/', '/api/') : incoming.pathname;
@@ -68,7 +70,9 @@ export async function proxy(request: Request) {
   if (!backend || !credential || !process.env.ADMIN_TOKEN || (!admin && !gateway)) return problem(503, 'Archivio non configurato.');
   try {
     const visitor = admin ? null : visitorSession(request);
-    const destination = new URL(path + incoming.search, backend);
+    const pdfLocale = incoming.searchParams.get('lang');
+    const localizedPdf = path.endsWith('/pdf') && pdfLocale !== null;
+    const destination = new URL((localizedPdf ? path.slice(0, -4) : path) + incoming.search, backend);
     if (destination.protocol !== 'https:' || destination.origin !== new URL(backend).origin) return problem(503, 'Archivio non configurato.');
     let body: string | undefined;
     if (request.method !== 'GET') {
@@ -84,9 +88,27 @@ export async function proxy(request: Request) {
     if (upstream.status >= 300 && upstream.status < 400 || upstream.headers.get('content-type')?.includes('text/html')) return problem(502, 'Connessione all’archivio non disponibile.');
     const headers = new Headers({ 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
     if (visitor?.cookie) headers.set('Set-Cookie', visitor.cookie);
+    if (localizedPdf && upstream.ok) {
+      const { quote } = await upstream.json() as { quote: Quote };
+      const { createQuotePdf } = await import('../../lib/pdf');
+      const pdf = await createQuotePdf(quote, normalizeLocale(pdfLocale));
+      headers.set('Content-Type', 'application/pdf');
+      headers.set('Content-Disposition', `attachment; filename="${quote.number}-${normalizeLocale(pdfLocale)}.pdf"`);
+      return new Response(new Uint8Array(pdf), { headers });
+    }
     for (const key of ['content-type', 'content-disposition']) {
       const value = upstream.headers.get(key); if (value) headers.set(key, value);
     }
     return new Response(upstream.body, { status: upstream.status, headers });
   } catch { return problem(503, 'Archivio temporaneamente non raggiungibile. Riprova.'); }
+}
+export async function proxy(request: Request) {
+  const response = await proxyRequest(request);
+  const locale = normalizeLocale(request.headers.get('x-pergola-language') ?? new URL(request.url).searchParams.get('lang'));
+  if (!response.ok && locale !== 'it' && response.headers.get('Content-Type')?.includes('application/json')) {
+    const data = await response.json() as { error?: unknown };
+    if (typeof data.error === 'string') data.error = translateText(data.error, locale);
+    return Response.json(data, { status: response.status, headers: response.headers });
+  }
+  return response;
 }

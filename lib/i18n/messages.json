@@ -1,0 +1,1382 @@
+{
+  "Configuratore": {
+    "en": "Configurator",
+    "ru": "Калькулятор"
+  },
+  "Preventivi": {
+    "en": "Quotations",
+    "ru": "Мои расчёты"
+  },
+  "Bozza": {
+    "en": "Draft",
+    "ru": "Черновик"
+  },
+  "Da verificare": {
+    "en": "Needs review",
+    "ru": "Требует проверки"
+  },
+  "Emesso": {
+    "en": "Issued",
+    "ru": "Выставлен"
+  },
+  "Confermato": {
+    "en": "Confirmed",
+    "ru": "Подтверждён"
+  },
+  "Annullato": {
+    "en": "Cancelled",
+    "ru": "Отменён"
+  },
+  "Analisi foto AI": {
+    "en": "AI photo analysis",
+    "ru": "AI-анализ фотографии"
+  },
+  "Catalogo e impostazioni": {
+    "en": "Catalogue and settings",
+    "ru": "Каталог и настройки"
+  },
+  "Vai al contenuto": {
+    "en": "Skip to content",
+    "ru": "Перейти к содержимому"
+  },
+  "Pergola home": {
+    "en": "Pergola home",
+    "ru": "Главная Pergola"
+  },
+  "SPAZI DA VIVERE": {
+    "en": "SPACES FOR LIVING",
+    "ru": "ПРОСТРАНСТВО ДЛЯ ЖИЗНИ"
+  },
+  "AREA DI LAVORO": {
+    "en": "WORKSPACE",
+    "ru": "РАБОЧАЯ ОБЛАСТЬ"
+  },
+  "Navigazione principale": {
+    "en": "Main navigation",
+    "ru": "Основная навигация"
+  },
+  "Non disponibile": {
+    "en": "Unavailable",
+    "ru": "Недоступно"
+  },
+  "Catalogo prodotti 2023": {
+    "en": "2023 product catalogue",
+    "ru": "Каталог продукции 2023"
+  },
+  "Ogni spazio ha il suo potenziale.": {
+    "en": "Every space has potential.",
+    "ru": "У каждого пространства есть потенциал."
+  },
+  "Troviamo la soluzione giusta.": {
+    "en": "Let’s find the right solution.",
+    "ru": "Найдём подходящее решение."
+  },
+  "Configuratore pubblico": {
+    "en": "Public configurator",
+    "ru": "Открытый калькулятор"
+  },
+  "Area riservata": {
+    "en": "Private workspace",
+    "ru": "Личный кабинет"
+  },
+  "Area di lavoro": {
+    "en": "Workspace",
+    "ru": "Рабочая область"
+  },
+  "Archivio connesso": {
+    "en": "Archive connected",
+    "ru": "Архив подключён"
+  },
+  "Connessione archivio": {
+    "en": "Connecting to archive",
+    "ru": "Подключение к архиву"
+  },
+  "Chiudi errore": {
+    "en": "Dismiss error",
+    "ru": "Закрыть ошибку"
+  },
+  "Il tuo spazio di lavoro.": {
+    "en": "Your workspace.",
+    "ru": "Ваше рабочее пространство."
+  },
+  "Accedi o riprova a collegare l’archivio.": {
+    "en": "Sign in or try connecting to the archive again.",
+    "ru": "Войдите или повторите подключение к архиву."
+  },
+  "Stiamo preparando il catalogo IC Tende…": {
+    "en": "Loading the IC Tende catalogue…",
+    "ru": "Загружаем каталог IC Tende…"
+  },
+  "Riprova": {
+    "en": "Try again",
+    "ru": "Повторить"
+  },
+  "Accedi con ChatGPT": {
+    "en": "Sign in with ChatGPT",
+    "ru": "Войти через ChatGPT"
+  },
+  "Codice di accesso amministratore": {
+    "en": "Administrator access code",
+    "ru": "Код доступа администратора"
+  },
+  "Accedi": {
+    "en": "Sign in",
+    "ru": "Войти"
+  },
+  "CONFIGURATORE SU MISURA": {
+    "en": "MADE-TO-MEASURE CONFIGURATOR",
+    "ru": "КАЛЬКУЛЯТОР ПО ВАШИМ РАЗМЕРАМ"
+  },
+  "Il tuo spazio,": {
+    "en": "Your space,",
+    "ru": "Ваше пространство,"
+  },
+  "la tua misura.": {
+    "en": "your dimensions.",
+    "ru": "ваши размеры."
+  },
+  "Dall’idea al preventivo. Scegli, configura e dai forma al tuo progetto.": {
+    "en": "From idea to quote. Choose, configure and shape your project.",
+    "ru": "От идеи к расчёту. Выберите модель и настройте свой проект."
+  },
+  "Prezzi da listino": {
+    "en": "Catalogue prices",
+    "ru": "Цены из каталога"
+  },
+  "Famiglie di prodotto": {
+    "en": "Product families",
+    "ru": "Категории продукции"
+  },
+  "Scegli il modello": {
+    "en": "Choose a model",
+    "ru": "Выберите модель"
+  },
+  "Cerca modello": {
+    "en": "Search models",
+    "ru": "Поиск модели"
+  },
+  "Cerca un modello…": {
+    "en": "Search for a model…",
+    "ru": "Найти модель…"
+  },
+  "Cancella ricerca modello": {
+    "en": "Clear model search",
+    "ru": "Очистить поиск модели"
+  },
+  "Modello": {
+    "en": "Model",
+    "ru": "Модель"
+  },
+  "Immagine di catalogo · finiture indicative": {
+    "en": "Catalogue image · finishes for illustration",
+    "ru": "Фото из каталога · отделка для примера"
+  },
+  "Dati controllati": {
+    "en": "Data reviewed",
+    "ru": "Данные проверены"
+  },
+  "Verifica richiesta": {
+    "en": "Review required",
+    "ru": "Нужна проверка"
+  },
+  "Definisci le misure": {
+    "en": "Set the dimensions",
+    "ru": "Укажите размеры"
+  },
+  "Tutte le misure in cm": {
+    "en": "All dimensions in cm",
+    "ru": "Все размеры в сантиметрах"
+  },
+  "Configurazione / variante": {
+    "en": "Configuration / variant",
+    "ru": "Конфигурация / вариант"
+  },
+  "Preventivo manuale richiesto": {
+    "en": "Manual quotation required",
+    "ru": "Нужен индивидуальный расчёт"
+  },
+  "Altezza / caduta": {
+    "en": "Height / drop",
+    "ru": "Высота / опускание"
+  },
+  "Larghezza": {
+    "en": "Width",
+    "ru": "Ширина"
+  },
+  "Altezza": {
+    "en": "Height",
+    "ru": "Высота"
+  },
+  "Sporgenza": {
+    "en": "Projection",
+    "ru": "Вылет"
+  },
+  "Le misure disponibili seguono le tabelle del produttore. Per misure intermedie è richiesta una verifica dedicata.": {
+    "en": "Available dimensions follow the manufacturer’s tables. Intermediate sizes require a separate review.",
+    "ru": "Доступные размеры взяты из таблиц производителя. Промежуточные размеры требуют отдельной проверки."
+  },
+  "Superficie reale": {
+    "en": "Actual area",
+    "ru": "Фактическая площадь"
+  },
+  "Superficie fatturabile": {
+    "en": "Billable area",
+    "ru": "Оплачиваемая площадь"
+  },
+  "Tariffa di listino": {
+    "en": "Catalogue rate",
+    "ru": "Тариф из каталога"
+  },
+  "Dimensioni e materiale": {
+    "en": "Dimensions and material",
+    "ru": "Размеры и материал"
+  },
+  "Quotazione manuale richiesta": {
+    "en": "Manual pricing required",
+    "ru": "Нужен индивидуальный расчёт"
+  },
+  "Quantità": {
+    "en": "Quantity",
+    "ru": "Количество"
+  },
+  "Finiture e dettagli": {
+    "en": "Finishes and details",
+    "ru": "Отделка и комплектация"
+  },
+  "Colore della struttura": {
+    "en": "Frame colour",
+    "ru": "Цвет конструкции"
+  },
+  "Altri colori, tessuti e accessori non elencati richiedono una quotazione dedicata.": {
+    "en": "Other colours, fabrics and unlisted accessories require a separate quotation.",
+    "ru": "Другие цвета, ткани и дополнительные аксессуары рассчитываются отдельно."
+  },
+  "Tessuto": {
+    "en": "Fabric",
+    "ru": "Ткань"
+  },
+  "Motorizzazione IC Tende": {
+    "en": "IC Tende motor",
+    "ru": "Привод IC Tende"
+  },
+  "Comandi": {
+    "en": "Controls",
+    "ru": "Управление"
+  },
+  "Sensori": {
+    "en": "Sensors",
+    "ru": "Датчики"
+  },
+  "Domotica": {
+    "en": "Smart home",
+    "ru": "Умный дом"
+  },
+  "Tettuccio": {
+    "en": "Protective canopy",
+    "ru": "Защитный козырёк"
+  },
+  "Tappi tettuccio": {
+    "en": "Canopy end caps",
+    "ru": "Заглушки козырька"
+  },
+  "Molla": {
+    "en": "Spring",
+    "ru": "Пружина"
+  },
+  "Cucitura": {
+    "en": "Stitching",
+    "ru": "Прошивка"
+  },
+  "Confezione": {
+    "en": "Fabric construction",
+    "ru": "Изготовление полотна"
+  },
+  "Tessuto di serie · incluso": {
+    "en": "Standard fabric · included",
+    "ru": "Стандартная ткань · включена"
+  },
+  "Nessuna opzione aggiunta": {
+    "en": "No extra option",
+    "ru": "Без дополнительных опций"
+  },
+  "Note tecniche e condizioni": {
+    "en": "Technical notes and conditions",
+    "ru": "Технические примечания и условия"
+  },
+  "Prezzi del catalogo 2023: attualità da confermare con il produttore.": {
+    "en": "2023 catalogue prices: confirm current prices with the manufacturer.",
+    "ru": "Цены каталога 2023 года: актуальность нужно подтвердить у производителя."
+  },
+  "Prepara il preventivo": {
+    "en": "Prepare your quotation",
+    "ru": "Подготовьте расчёт"
+  },
+  "Cliente / ragione sociale *": {
+    "en": "Customer / company name *",
+    "ru": "Имя клиента / название компании *"
+  },
+  "Nome del cliente": {
+    "en": "Customer name",
+    "ru": "Имя клиента"
+  },
+  "Indirizzo del progetto": {
+    "en": "Project address",
+    "ru": "Адрес объекта"
+  },
+  "Via, città": {
+    "en": "Street, city",
+    "ru": "Улица, город"
+  },
+  "Email": {
+    "en": "Email",
+    "ru": "Электронная почта"
+  },
+  "Telefono": {
+    "en": "Phone",
+    "ru": "Телефон"
+  },
+  "Posa in opera · totale €": {
+    "en": "Installation · total €",
+    "ru": "Монтаж · всего €"
+  },
+  "Trasporto · totale €": {
+    "en": "Delivery · total €",
+    "ru": "Доставка · всего €"
+  },
+  "Sconto prodotti %": {
+    "en": "Product discount %",
+    "ru": "Скидка на продукцию %"
+  },
+  "Note del progetto": {
+    "en": "Project notes",
+    "ru": "Примечания к проекту"
+  },
+  "Esigenze particolari, dettagli da confermare…": {
+    "en": "Special requirements, details to confirm…",
+    "ru": "Особые пожелания, детали для уточнения…"
+  },
+  "Il tuo progetto": {
+    "en": "Your project",
+    "ru": "Ваш проект"
+  },
+  "Completa una configurazione valida per calcolare il prezzo.": {
+    "en": "Complete a valid configuration to calculate the price.",
+    "ru": "Выберите допустимую конфигурацию для расчёта цены."
+  },
+  "Imponibile": {
+    "en": "Net amount",
+    "ru": "Сумма без НДС"
+  },
+  "IVA": {
+    "en": "VAT",
+    "ru": "НДС"
+  },
+  "Totale progetto": {
+    "en": "Project total",
+    "ru": "Итого по проекту"
+  },
+  "IVA inclusa": {
+    "en": "VAT included",
+    "ru": "С НДС"
+  },
+  "Salva progetto e PDF": {
+    "en": "Save project and PDF",
+    "ru": "Сохранить проект и PDF"
+  },
+  "Salva bozza": {
+    "en": "Save draft",
+    "ru": "Сохранить черновик"
+  },
+  "Richiedi verifica": {
+    "en": "Request review",
+    "ru": "Запросить проверку"
+  },
+  "Emetti preventivo": {
+    "en": "Issue quotation",
+    "ru": "Выставить предложение"
+  },
+  "I tuoi progetti sono visibili solo da questo browser.": {
+    "en": "Your projects are accessible only from this browser.",
+    "ru": "Ваши проекты доступны только в этом браузере."
+  },
+  "Salvataggio nell’archivio condiviso.": {
+    "en": "Saved to the shared archive.",
+    "ru": "Сохранение в общем архиве."
+  },
+  "PDF disponibile dopo il salvataggio.": {
+    "en": "PDF available after saving.",
+    "ru": "PDF доступен после сохранения."
+  },
+  "Un prezzo, una fonte.": {
+    "en": "Every price has a source.",
+    "ru": "У каждой цены есть источник."
+  },
+  "Tabelle e condizioni dal catalogo originale. Nessun prezzo interpolato.": {
+    "en": "Tables and conditions from the original catalogue. No price interpolation.",
+    "ru": "Таблицы и условия из исходного каталога. Цены не интерполируются."
+  },
+  "Listino · p.": {
+    "en": "Catalogue · p.",
+    "ru": "Каталог · стр."
+  },
+  "Listino p.": {
+    "en": "Catalogue p.",
+    "ru": "Каталог стр."
+  },
+  "Visualizzazione AI": {
+    "en": "AI visualisation",
+    "ru": "AI-визуализация"
+  },
+  "Funzione temporaneamente non disponibile": {
+    "en": "Feature temporarily unavailable",
+    "ru": "Функция временно недоступна"
+  },
+  "DAL PROGETTO ALL’ORDINE": {
+    "en": "FROM PROJECT TO ORDER",
+    "ru": "ОТ ПРОЕКТА К ЗАКАЗУ"
+  },
+  "I tuoi": {
+    "en": "Your",
+    "ru": "Ваши"
+  },
+  "preventivi.": {
+    "en": "quotations.",
+    "ru": "расчёты."
+  },
+  "I tuoi progetti salvati. Conserva i cookie di questo browser per ritrovarli.": {
+    "en": "Your saved projects. Keep this browser’s cookies to access them again.",
+    "ru": "Ваши сохранённые проекты. Сохраняйте cookie этого браузера, чтобы вернуться к ним."
+  },
+  "Progetti, clienti e offerte. Tutto ritrovabile, anche da un altro dispositivo.": {
+    "en": "Projects, customers and quotations, accessible across devices.",
+    "ru": "Проекты, клиенты и предложения с доступом с разных устройств."
+  },
+  "Nuovo progetto": {
+    "en": "New project",
+    "ru": "Новый проект"
+  },
+  "Torna all’archivio": {
+    "en": "Back to archive",
+    "ru": "Назад к архиву"
+  },
+  "Scarica PDF": {
+    "en": "Download PDF",
+    "ru": "Скачать PDF"
+  },
+  "Duplica e ricalcola": {
+    "en": "Duplicate and recalculate",
+    "ru": "Создать копию и пересчитать"
+  },
+  "PREPARATO PER": {
+    "en": "PREPARED FOR",
+    "ru": "ПОДГОТОВЛЕНО ДЛЯ"
+  },
+  "IL TUO PROGETTO": {
+    "en": "YOUR PROJECT",
+    "ru": "ВАШ ПРОЕКТ"
+  },
+  "Descrizione": {
+    "en": "Description",
+    "ru": "Описание"
+  },
+  "Importo": {
+    "en": "Amount",
+    "ru": "Сумма"
+  },
+  "Totale": {
+    "en": "Total",
+    "ru": "Итого"
+  },
+  "Richiesta di verifica tecnica e commerciale.": {
+    "en": "Technical and commercial review request.",
+    "ru": "Запрос технической и коммерческой проверки."
+  },
+  "Bozza di progetto.": {
+    "en": "Project draft.",
+    "ru": "Черновик проекта."
+  },
+  "Questo documento non costituisce un’offerta.": {
+    "en": "This document is not a commercial offer.",
+    "ru": "Этот документ не является коммерческим предложением."
+  },
+  "Valido fino al": {
+    "en": "Valid until",
+    "ru": "Действительно до"
+  },
+  "Registra conferma cliente": {
+    "en": "Record customer confirmation",
+    "ru": "Зафиксировать подтверждение клиента"
+  },
+  "Annulla documento": {
+    "en": "Cancel document",
+    "ru": "Отменить документ"
+  },
+  "La conferma registra l’ordine internamente. Non invia dati al produttore.": {
+    "en": "Confirmation records the order internally. No data is sent to the manufacturer.",
+    "ru": "Подтверждение фиксирует заказ внутри системы. Данные производителю не отправляются."
+  },
+  "Documenti in archivio": {
+    "en": "Archived documents",
+    "ru": "Документов в архиве"
+  },
+  "Preventivi emessi": {
+    "en": "Issued quotations",
+    "ru": "Выставленные предложения"
+  },
+  "Confermati": {
+    "en": "Confirmed",
+    "ru": "Подтверждены"
+  },
+  "Cerca preventivi": {
+    "en": "Search quotations",
+    "ru": "Поиск расчётов"
+  },
+  "Cerca per cliente, modello o numero…": {
+    "en": "Search by customer, model or number…",
+    "ru": "Поиск по клиенту, модели или номеру…"
+  },
+  "Filtra per stato": {
+    "en": "Filter by status",
+    "ru": "Фильтр по статусу"
+  },
+  "Tutti gli stati": {
+    "en": "All statuses",
+    "ru": "Все статусы"
+  },
+  "Caricamento archivio…": {
+    "en": "Loading archive…",
+    "ru": "Загрузка архива…"
+  },
+  "Nessun risultato": {
+    "en": "No results",
+    "ru": "Ничего не найдено"
+  },
+  "Il primo progetto ti aspetta.": {
+    "en": "Your first project awaits.",
+    "ru": "Создайте свой первый проект."
+  },
+  "Prova a modificare la ricerca.": {
+    "en": "Try changing your search.",
+    "ru": "Попробуйте изменить запрос."
+  },
+  "Configura un prodotto e salva il tuo primo preventivo.": {
+    "en": "Configure a product and save your first quotation.",
+    "ru": "Настройте изделие и сохраните первый расчёт."
+  },
+  "Apri configuratore": {
+    "en": "Open configurator",
+    "ru": "Открыть калькулятор"
+  },
+  "Documento / cliente": {
+    "en": "Document / customer",
+    "ru": "Документ / клиент"
+  },
+  "Progetto": {
+    "en": "Project",
+    "ru": "Проект"
+  },
+  "Stato": {
+    "en": "Status",
+    "ru": "Статус"
+  },
+  "Ultimi 200 documenti · I prezzi salvati restano invariati dopo gli aggiornamenti del catalogo.": {
+    "en": "Latest 200 documents · Saved prices remain unchanged after catalogue updates.",
+    "ru": "Последние 200 документов · Сохранённые цены не меняются при обновлении каталога."
+  },
+  "UNO SGUARDO AL FUTURO": {
+    "en": "LOOKING AHEAD",
+    "ru": "ВЗГЛЯД В БУДУЩЕЕ"
+  },
+  "Immagina": {
+    "en": "Imagine",
+    "ru": "Представьте"
+  },
+  "il risultato.": {
+    "en": "the result.",
+    "ru": "результат."
+  },
+  "Il tuo progetto, nel suo contesto.": {
+    "en": "Your project in its setting.",
+    "ru": "Ваш проект в реальном окружении."
+  },
+  "Pergoltenda IC Tende in uno spazio esterno": {
+    "en": "IC Tende pergola in an outdoor setting",
+    "ru": "Пергола IC Tende на открытой площадке"
+  },
+  "PROSSIMAMENTE": {
+    "en": "COMING SOON",
+    "ru": "СКОРО"
+  },
+  "Una foto.": {
+    "en": "One photo.",
+    "ru": "Одна фотография."
+  },
+  "Nuove possibilità.": {
+    "en": "New possibilities.",
+    "ru": "Новые возможности."
+  },
+  "L’analisi dello spazio e la visualizzazione del progetto con intelligenza artificiale saranno disponibili in una prossima versione.": {
+    "en": "AI space analysis and project visualisation will be available in a future version.",
+    "ru": "AI-анализ пространства и визуализация проекта появятся в одной из следующих версий."
+  },
+  "Funzione temporaneamente non disponibile. Il caricamento delle foto e la generazione di immagini sono disattivati.": {
+    "en": "Feature temporarily unavailable. Photo uploads and image generation are disabled.",
+    "ru": "Функция временно недоступна. Загрузка фотографий и генерация изображений отключены."
+  },
+  "Analisi e visualizzazione non disponibili": {
+    "en": "Analysis and visualisation unavailable",
+    "ru": "Анализ и визуализация недоступны"
+  },
+  "Continua con il configuratore": {
+    "en": "Continue with the configurator",
+    "ru": "Продолжить в калькуляторе"
+  },
+  "IL TUO STRUMENTO DI LAVORO": {
+    "en": "YOUR BUSINESS TOOL",
+    "ru": "ВАШ РАБОЧИЙ ИНСТРУМЕНТ"
+  },
+  "Catalogo e": {
+    "en": "Catalogue and",
+    "ru": "Каталог и"
+  },
+  "impostazioni.": {
+    "en": "settings.",
+    "ru": "настройки."
+  },
+  "Identità aziendale, dati di listino e controllo delle configurazioni.": {
+    "en": "Company details, catalogue data and configuration reviews.",
+    "ru": "Реквизиты компании, данные каталога и проверка конфигураций."
+  },
+  "La tua attività": {
+    "en": "Your business",
+    "ru": "Ваша компания"
+  },
+  "Ragione sociale *": {
+    "en": "Company name *",
+    "ru": "Название компании *"
+  },
+  "Partita IVA": {
+    "en": "VAT number",
+    "ru": "Номер НДС / Partita IVA"
+  },
+  "Indirizzo": {
+    "en": "Address",
+    "ru": "Адрес"
+  },
+  "Validità preventivo · giorni": {
+    "en": "Quotation validity · days",
+    "ru": "Срок действия предложения · дней"
+  },
+  "IVA %": {
+    "en": "VAT %",
+    "ru": "НДС %"
+  },
+  "Condizioni del preventivo": {
+    "en": "Quotation terms",
+    "ru": "Условия предложения"
+  },
+  "Salva impostazioni": {
+    "en": "Save settings",
+    "ru": "Сохранить настройки"
+  },
+  "Completa i dati fiscali e un recapito prima di emettere offerte.": {
+    "en": "Complete your tax details and a contact before issuing quotations.",
+    "ru": "Перед выставлением предложений укажите налоговые реквизиты и контакт."
+  },
+  "Controllo dei modelli": {
+    "en": "Model review",
+    "ru": "Проверка моделей"
+  },
+  "Modello da verificare": {
+    "en": "Model to review",
+    "ru": "Модель для проверки"
+  },
+  "Confronta tabelle, colori, minimi e limiti tecnici con il PDF originale. Un’approvazione abilita l’emissione per le configurazioni ordinarie del modello.": {
+    "en": "Compare tables, colours, minimums and technical limits with the original PDF. Approval enables ordinary quotations for this model.",
+    "ru": "Сверьте таблицы, цвета, минимумы и технические ограничения с исходным PDF. Одобрение разрешает предложения для стандартных конфигураций модели."
+  },
+  "Esito della verifica": {
+    "en": "Review result",
+    "ru": "Результат проверки"
+  },
+  "Da verificare · emissione bloccata": {
+    "en": "Needs review · issuing blocked",
+    "ru": "Требует проверки · выставление заблокировано"
+  },
+  "Controllato · emissione consentita": {
+    "en": "Reviewed · issuing allowed",
+    "ru": "Проверено · выставление разрешено"
+  },
+  "Nota di verifica *": {
+    "en": "Review note *",
+    "ru": "Примечание к проверке *"
+  },
+  "Indica pagine controllate, correzioni e condizioni confermate…": {
+    "en": "List reviewed pages, corrections and confirmed conditions…",
+    "ru": "Укажите проверенные страницы, исправления и подтверждённые условия…"
+  },
+  "Registra verifica": {
+    "en": "Save review",
+    "ru": "Сохранить проверку"
+  },
+  "CATALOGO ATTIVO": {
+    "en": "ACTIVE CATALOGUE",
+    "ru": "АКТИВНЫЙ КАТАЛОГ"
+  },
+  "Un catalogo strutturato, con una fonte per ogni prezzo.": {
+    "en": "A structured catalogue with a source for every price.",
+    "ru": "Структурированный каталог с источником для каждой цены."
+  },
+  "prodotti": {
+    "en": "products",
+    "ru": "позиций"
+  },
+  "famiglie": {
+    "en": "families",
+    "ru": "категорий"
+  },
+  "controllati": {
+    "en": "reviewed",
+    "ru": "проверено"
+  },
+  "controllato": {
+    "en": "reviewed",
+    "ru": "проверено"
+  },
+  "da verificare": {
+    "en": "needs review",
+    "ru": "требует проверки"
+  },
+  "Esporta catalogo JSON": {
+    "en": "Export catalogue JSON",
+    "ru": "Экспорт каталога JSON"
+  },
+  "Sostituisci catalogo JSON": {
+    "en": "Replace catalogue JSON",
+    "ru": "Заменить каталог JSON"
+  },
+  "L’import sostituisce il catalogo attivo e azzera le verifiche manuali. I documenti già salvati mantengono prezzi e dati originali.": {
+    "en": "Import replaces the active catalogue and clears manual reviews. Saved documents keep their original data and prices.",
+    "ru": "Импорт заменяет активный каталог и сбрасывает ручные проверки. Сохранённые документы сохраняют исходные данные и цены."
+  },
+  "Origine e versione": {
+    "en": "Source and version",
+    "ru": "Источник и версия"
+  },
+  "Le funzioni AI sono disabilitate. Nessuna fotografia viene caricata o inviata a servizi esterni.": {
+    "en": "AI features are disabled. No photos are uploaded or sent to external services.",
+    "ru": "AI-функции отключены. Фотографии не загружаются и не отправляются внешним сервисам."
+  },
+  "Il progetto comincia da qui.": {
+    "en": "Your project starts here.",
+    "ru": "Ваш проект начинается здесь."
+  },
+  "Catalogo IC Tende · Edizione 2023": {
+    "en": "IC Tende catalogue · 2023 edition",
+    "ru": "Каталог IC Tende · Издание 2023"
+  },
+  "Chiudi notifica": {
+    "en": "Dismiss notification",
+    "ru": "Закрыть уведомление"
+  },
+  "Inserisci il nome del cliente per salvare il documento.": {
+    "en": "Enter the customer name to save the document.",
+    "ru": "Укажите имя клиента, чтобы сохранить документ."
+  },
+  "Documento salvato nell’archivio.": {
+    "en": "Document saved to the archive.",
+    "ru": "Документ сохранён в архиве."
+  },
+  "Conferma interna registrata.": {
+    "en": "Internal confirmation recorded.",
+    "ru": "Внутреннее подтверждение сохранено."
+  },
+  "Documento annullato.": {
+    "en": "Document cancelled.",
+    "ru": "Документ отменён."
+  },
+  "Modifiche salvate.": {
+    "en": "Changes saved.",
+    "ru": "Изменения сохранены."
+  },
+  "Il catalogo supera il limite di 3 MB.": {
+    "en": "The catalogue exceeds the 3 MB limit.",
+    "ru": "Каталог превышает ограничение 3 МБ."
+  },
+  "Il file non contiene un JSON valido.": {
+    "en": "The file does not contain valid JSON.",
+    "ru": "Файл не содержит корректный JSON."
+  },
+  "Il prodotto non è più disponibile nel catalogo.": {
+    "en": "The product is no longer available in the catalogue.",
+    "ru": "Изделие больше недоступно в каталоге."
+  },
+  "Progetto duplicato. Prezzi ricalcolati sul catalogo attuale.": {
+    "en": "Project duplicated. Prices recalculated using the current catalogue.",
+    "ru": "Создана копия проекта. Цены пересчитаны по текущему каталогу."
+  },
+  "Operazione non completata.": {
+    "en": "Operation could not be completed.",
+    "ru": "Не удалось выполнить операцию."
+  },
+  "Tende a bracci": {
+    "en": "Folding-arm awnings",
+    "ru": "Локтевые маркизы"
+  },
+  "Tende a caduta": {
+    "en": "Drop awnings",
+    "ru": "Вертикальные маркизы"
+  },
+  "Tende giardino": {
+    "en": "Garden awnings",
+    "ru": "Садовые маркизы"
+  },
+  "Cappottine": {
+    "en": "Canopy awnings",
+    "ru": "Купольные маркизы"
+  },
+  "Tende orizzontali": {
+    "en": "Horizontal awnings",
+    "ru": "Горизонтальные маркизы"
+  },
+  "Gazebi": {
+    "en": "Gazebos",
+    "ru": "Беседки"
+  },
+  "Pergoltende": {
+    "en": "Retractable pergolas",
+    "ru": "Перголы с тентом"
+  },
+  "Veneziane e zanzariere": {
+    "en": "Blinds and insect screens",
+    "ru": "Жалюзи и москитные сетки"
+  },
+  "Ombrelloni": {
+    "en": "Parasols",
+    "ru": "Зонты"
+  },
+  "Ombra su misura per balconi e terrazze.": {
+    "en": "Made-to-measure shade for balconies and terraces.",
+    "ru": "Затенение по вашим размерам для балконов и террас."
+  },
+  "Protezione verticale, privacy e comfort.": {
+    "en": "Vertical protection, privacy and comfort.",
+    "ru": "Вертикальная защита, приватность и комфорт."
+  },
+  "Coperture per terrazzi e grandi spazi.": {
+    "en": "Covers for terraces and large spaces.",
+    "ru": "Навесы для террас и больших площадок."
+  },
+  "Forme classiche per finestre e ingressi.": {
+    "en": "Classic shapes for windows and entrances.",
+    "ru": "Классические формы для окон и входных групп."
+  },
+  "Schermature per verande e giardini d’inverno.": {
+    "en": "Shading for verandas and conservatories.",
+    "ru": "Затенение для веранд и зимних садов."
+  },
+  "Strutture indipendenti per vivere all’aperto.": {
+    "en": "Freestanding structures for outdoor living.",
+    "ru": "Отдельно стоящие конструкции для отдыха на воздухе."
+  },
+  "Spazi da abitare, in ogni stagione.": {
+    "en": "Outdoor living spaces for every season.",
+    "ru": "Пространство для отдыха в любое время года."
+  },
+  "Luce, protezione e dettagli per gli interni.": {
+    "en": "Light control, protection and interior details.",
+    "ru": "Управление светом, защита и детали интерьера."
+  },
+  "Soluzioni per il giardino e l’ospitalità.": {
+    "en": "Solutions for gardens and hospitality.",
+    "ru": "Решения для сада и зон отдыха."
+  },
+  "Altri colori e lavorazioni richiedono una quotazione dedicata.": {
+    "en": "Other colours and custom work require a separate quotation.",
+    "ru": "Другие цвета и индивидуальное изготовление рассчитываются отдельно."
+  },
+  "Inclinazione minima utile: 10%.": {
+    "en": "Minimum working slope: 10%.",
+    "ru": "Минимальный рабочий уклон: 10%."
+  },
+  "Le celle speciali del listino richiedono verifica dei bracci e del montaggio.": {
+    "en": "Special catalogue cells require an arm and installation review.",
+    "ru": "Особые ячейки каталога требуют проверки рычагов и монтажа."
+  },
+  "Misure FINITE. Per misure LUCE confermare la detrazione di 3 mm prima dell’ordine.": {
+    "en": "FINISHED dimensions. For CLEAR OPENING dimensions, confirm the 3 mm deduction before ordering.",
+    "ru": "Указаны ГОТОВЫЕ размеры. Для размеров ПРОЁМА перед заказом подтвердите вычет 3 мм."
+  },
+  "Motorizzazione e dotazioni di serie da confermare sulla scheda tecnica; nessun motore aggiunto automaticamente.": {
+    "en": "Confirm the motor and standard equipment against the technical sheet; no motor is added automatically.",
+    "ru": "Привод и штатную комплектацию нужно сверить с техническим листом; мотор автоматически не добавляется."
+  },
+  "Prezzi da inserire dopo verifica: tabella complessa.": {
+    "en": "Prices must be entered after review: complex table.",
+    "ru": "Цены вводятся после проверки сложной таблицы."
+  },
+  "Verificare campate, fissaggi, altezza e condizioni di posa prima dell’ordine.": {
+    "en": "Check spans, fixings, height and installation conditions before ordering.",
+    "ru": "Перед заказом проверьте пролёты, крепления, высоту и условия монтажа."
+  },
+  "Bianco RAL 9010": {
+    "en": "White RAL 9010",
+    "ru": "Белый RAL 9010"
+  },
+  "Avorio RAL 1013": {
+    "en": "Ivory RAL 1013",
+    "ru": "Слоновая кость RAL 1013"
+  },
+  "Marrone RAL 8017": {
+    "en": "Brown RAL 8017",
+    "ru": "Коричневый RAL 8017"
+  },
+  "Verde RAL 6005": {
+    "en": "Green RAL 6005",
+    "ru": "Зелёный RAL 6005"
+  },
+  "Grigio RAL 7035": {
+    "en": "Grey RAL 7035",
+    "ru": "Серый RAL 7035"
+  },
+  "Nero RAL 9005": {
+    "en": "Black RAL 9005",
+    "ru": "Чёрный RAL 9005"
+  },
+  "1 campata": {
+    "en": "1 span",
+    "ru": "1 пролёт"
+  },
+  "2 campate": {
+    "en": "2 spans",
+    "ru": "2 пролёта"
+  },
+  "3 campate": {
+    "en": "3 spans",
+    "ru": "3 пролёта"
+  },
+  "4 campate": {
+    "en": "4 spans",
+    "ru": "4 пролёта"
+  },
+  "5 campate": {
+    "en": "5 spans",
+    "ru": "5 пролётов"
+  },
+  "Con cassonetto": {
+    "en": "With cassette",
+    "ru": "С кассетой"
+  },
+  "Senza cassonetto": {
+    "en": "Without cassette",
+    "ru": "Без кассеты"
+  },
+  "Con mantovana": {
+    "en": "With valance",
+    "ru": "С воланом"
+  },
+  "Senza mantovana": {
+    "en": "Without valance",
+    "ru": "Без волана"
+  },
+  "LED integrati": {
+    "en": "Integrated LEDs",
+    "ru": "Встроенная LED-подсветка"
+  },
+  "Standard": {
+    "en": "Standard",
+    "ru": "Стандарт"
+  },
+  "Tabella 1": {
+    "en": "Table 1",
+    "ru": "Таблица 1"
+  },
+  "Tabella 2": {
+    "en": "Table 2",
+    "ru": "Таблица 2"
+  },
+  "Tenda affiancata": {
+    "en": "Paired awning",
+    "ru": "Парная маркиза"
+  },
+  "Tenda singola": {
+    "en": "Single awning",
+    "ru": "Одиночная маркиза"
+  },
+  "IC Tende · kit centralina e telecomando": {
+    "en": "IC Tende · control unit and remote kit",
+    "ru": "IC Tende · блок управления и пульт"
+  },
+  "IC Tende · motore standard": {
+    "en": "IC Tende · standard motor",
+    "ru": "IC Tende · стандартный мотор"
+  },
+  "IC Tende · motore con soccorso": {
+    "en": "IC Tende · motor with manual override",
+    "ru": "IC Tende · мотор с ручным дублёром"
+  },
+  "IC Tende · motore radio con soccorso": {
+    "en": "IC Tende · radio motor with manual override",
+    "ru": "IC Tende · радиомотор с ручным дублёром"
+  },
+  "IC Tende · motore radio elettronico": {
+    "en": "IC Tende · electronic-limit radio motor",
+    "ru": "IC Tende · радиомотор с электронными концевиками"
+  },
+  "IC Tende · motore radio meccanico": {
+    "en": "IC Tende · mechanical-limit radio motor",
+    "ru": "IC Tende · радиомотор с механическими концевиками"
+  },
+  "Cucitura con cotone TENARA": {
+    "en": "TENARA thread stitching",
+    "ru": "Прошивка нитью TENARA"
+  },
+  "Molla di compensazione": {
+    "en": "Compensation spring",
+    "ru": "Компенсационная пружина"
+  },
+  "Tappi per tettuccio · coppia": {
+    "en": "Canopy end caps · pair",
+    "ru": "Заглушки козырька · пара"
+  },
+  "Telo simmetrico": {
+    "en": "Symmetrical fabric panel",
+    "ru": "Симметричное полотно"
+  },
+  "Tessuto fuori campionario": {
+    "en": "Fabric outside the standard collection",
+    "ru": "Ткань вне стандартной коллекции"
+  },
+  "Tessuto Tempotest Seta Cruda": {
+    "en": "Tempotest Seta Cruda fabric",
+    "ru": "Ткань Tempotest Seta Cruda"
+  },
+  "Tettuccio di protezione": {
+    "en": "Protective canopy",
+    "ru": "Защитный козырёк"
+  },
+  "Crystal trasparente - Crystal retinato vinitex 3x3": {
+    "en": "Clear Crystal - reinforced Crystal Vinitex 3x3",
+    "ru": "Прозрачный Crystal - армированный Crystal Vinitex 3x3"
+  },
+  "Crystal retinato vinitex 3x3": {
+    "en": "Reinforced Crystal Vinitex 3x3",
+    "ru": "Армированный Crystal Vinitex 3x3"
+  },
+  "PVC stampato - Pvc microforato (MESH)": {
+    "en": "Printed PVC - microperforated PVC (MESH)",
+    "ru": "ПВХ с печатью - микроперфорированный ПВХ (MESH)"
+  },
+  "PVC Tinta unita Precontraint 302 Giovanardi": {
+    "en": "Solid-colour PVC Precontraint 302 Giovanardi",
+    "ru": "Однотонный ПВХ Precontraint 302 Giovanardi"
+  },
+  "Il prodotto non corrisponde alla configurazione.": {
+    "en": "The product does not match the configuration.",
+    "ru": "Изделие не соответствует конфигурации."
+  },
+  "La quantità deve essere un intero tra 1 e 100.": {
+    "en": "Quantity must be a whole number from 1 to 100.",
+    "ru": "Количество должно быть целым числом от 1 до 100."
+  },
+  "Inserire misure valide in centimetri, da 1 a 3000.": {
+    "en": "Enter valid dimensions in centimetres, from 1 to 3000.",
+    "ru": "Введите допустимые размеры в сантиметрах: от 1 до 3000."
+  },
+  "Gli importi di posa e trasporto non sono validi.": {
+    "en": "Installation and delivery amounts are invalid.",
+    "ru": "Некорректные суммы монтажа и доставки."
+  },
+  "Lo sconto deve essere compreso tra 0 e 50%.": {
+    "en": "The discount must be between 0 and 50%.",
+    "ru": "Скидка должна быть от 0 до 50%."
+  },
+  "Aliquota IVA non valida.": {
+    "en": "Invalid VAT rate.",
+    "ru": "Некорректная ставка НДС."
+  },
+  "Colore non previsto dal listino per questo modello.": {
+    "en": "This colour is not listed for this model.",
+    "ru": "Этот цвет не предусмотрен каталогом для данной модели."
+  },
+  "Questa combinazione di misure non è presente nel listino. Nessuna interpolazione applicata.": {
+    "en": "This combination of dimensions is not in the catalogue. No interpolation is applied.",
+    "ru": "Такого сочетания размеров нет в каталоге. Интерполяция не применяется."
+  },
+  "Configurazione speciale evidenziata nel listino: verifica tecnica obbligatoria prima dell’emissione.": {
+    "en": "Special configuration highlighted in the catalogue: technical review is required before issuing.",
+    "ru": "Особая конфигурация из каталога: перед выставлением предложения обязательна техническая проверка."
+  },
+  "Selezionare una variante e un materiale presenti nel listino.": {
+    "en": "Select a variant and material listed in the catalogue.",
+    "ru": "Выберите вариант и материал из каталога."
+  },
+  "Prezzo di base non disponibile: richiedere una quotazione manuale.": {
+    "en": "Base price unavailable: request manual pricing.",
+    "ru": "Базовая цена недоступна: запросите индивидуальный расчёт."
+  },
+  "Un accessorio è stato selezionato più volte.": {
+    "en": "An accessory was selected more than once.",
+    "ru": "Аксессуар выбран несколько раз."
+  },
+  "Accessorio non disponibile per questo prodotto.": {
+    "en": "Accessory unavailable for this product.",
+    "ru": "Аксессуар недоступен для этого изделия."
+  },
+  "Selezionare una sola opzione per ciascun gruppo.": {
+    "en": "Select only one option in each group.",
+    "ru": "Выберите только одну опцию в каждой группе."
+  },
+  "Posa in opera · importo concordato": {
+    "en": "Installation · agreed amount",
+    "ru": "Монтаж · согласованная сумма"
+  },
+  "Trasporto · importo concordato": {
+    "en": "Delivery · agreed amount",
+    "ru": "Доставка · согласованная сумма"
+  },
+  "Dati estratti dal catalogo: verifica del modello richiesta. È possibile salvare una richiesta di verifica, non emettere un’offerta.": {
+    "en": "Data extracted from the catalogue: model review required. Save a review request before issuing an offer.",
+    "ru": "Данные извлечены из каталога: требуется проверка модели. Можно сохранить запрос на проверку; выставление предложения пока недоступно."
+  },
+  "Prezzi riferiti al listino IC Tende 2023, da confermare con il produttore. Trasporto e posa esclusi salvo voce esplicita. L’ordine richiede conferma tecnica di misure, fissaggi e dotazioni.": {
+    "en": "Prices refer to the IC Tende 2023 catalogue and require manufacturer confirmation. Delivery and installation are excluded unless listed. Orders require technical confirmation of dimensions, fixings and equipment.",
+    "ru": "Цены взяты из каталога IC Tende 2023 и требуют подтверждения производителя. Доставка и монтаж не включены, если не указаны отдельно. Для заказа нужно техническое подтверждение размеров, креплений и комплектации."
+  },
+  "CONFIGURAZIONI SU MISURA": {
+    "en": "MADE-TO-MEASURE CONFIGURATIONS",
+    "ru": "КОНФИГУРАЦИИ ПО ВАШИМ РАЗМЕРАМ"
+  },
+  "BOZZA - NON COSTITUISCE OFFERTA": {
+    "en": "DRAFT - NOT A COMMERCIAL OFFER",
+    "ru": "ЧЕРНОВИК — НЕ КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ"
+  },
+  "RICHIESTA DI VERIFICA - NON COSTITUISCE OFFERTA": {
+    "en": "REVIEW REQUEST - NOT A COMMERCIAL OFFER",
+    "ru": "ЗАПРОС ПРОВЕРКИ — НЕ КОММЕРЧЕСКОЕ ПРЕДЛОЖЕНИЕ"
+  },
+  "PREVENTIVO": {
+    "en": "QUOTATION",
+    "ru": "РАСЧЁТ"
+  },
+  "ORDINE CONFERMATO INTERNAMENTE": {
+    "en": "ORDER CONFIRMED INTERNALLY",
+    "ru": "ЗАКАЗ ПОДТВЕРЖДЁН ВНУТРИ СИСТЕМЫ"
+  },
+  "DOCUMENTO ANNULLATO": {
+    "en": "CANCELLED DOCUMENT",
+    "ru": "ДОКУМЕНТ ОТМЕНЁН"
+  },
+  "CLIENTE": {
+    "en": "CUSTOMER",
+    "ru": "КЛИЕНТ"
+  },
+  "CONFIGURAZIONE": {
+    "en": "CONFIGURATION",
+    "ru": "КОНФИГУРАЦИЯ"
+  },
+  "NOTE DEL CLIENTE": {
+    "en": "CUSTOMER NOTES",
+    "ru": "ПРИМЕЧАНИЯ КЛИЕНТА"
+  },
+  "La conferma interna non invia automaticamente ordini al produttore.": {
+    "en": "Internal confirmation does not automatically send orders to the manufacturer.",
+    "ru": "Внутреннее подтверждение не отправляет заказ производителю автоматически."
+  },
+  "Archivio non disponibile. Contattare l’amministratore.": {
+    "en": "Archive unavailable. Contact the administrator.",
+    "ru": "Архив недоступен. Обратитесь к администратору."
+  },
+  "Sessione cliente non valida.": {
+    "en": "Invalid customer session.",
+    "ru": "Недействительный сеанс клиента."
+  },
+  "Accedere all’area di lavoro per continuare.": {
+    "en": "Sign in to the workspace to continue.",
+    "ru": "Для продолжения войдите в кабинет."
+  },
+  "Sconti, posa, trasporto ed emissione sono riservati al rivenditore.": {
+    "en": "Discounts, installation, delivery and issuing are reserved for the dealer.",
+    "ru": "Скидки, монтаж, доставка и выставление предложений доступны только продавцу."
+  },
+  "Richiesta da un’origine non consentita.": {
+    "en": "Request from an unauthorised origin.",
+    "ru": "Запрос из недопустимого источника."
+  },
+  "Il file supera il limite di 3 MB.": {
+    "en": "The file exceeds the 3 MB limit.",
+    "ru": "Файл превышает ограничение 3 МБ."
+  },
+  "JSON non valido.": {
+    "en": "Invalid JSON.",
+    "ru": "Некорректный JSON."
+  },
+  "Dati non validi. Controllare i campi e il formato del catalogo.": {
+    "en": "Invalid data. Check the fields and catalogue format.",
+    "ru": "Некорректные данные. Проверьте поля и формат каталога."
+  },
+  "Operazione non completata. Riprova; i dati già salvati restano nell’archivio.": {
+    "en": "Operation failed. Try again; previously saved data remains in the archive.",
+    "ru": "Не удалось выполнить операцию. Повторите попытку; сохранённые данные остаются в архиве."
+  },
+  "Origine non consentita.": {
+    "en": "Unauthorised origin.",
+    "ru": "Недопустимый источник запроса."
+  },
+  "Accesso non configurato.": {
+    "en": "Access is not configured.",
+    "ru": "Доступ не настроен."
+  },
+  "Richiesta troppo grande.": {
+    "en": "Request too large.",
+    "ru": "Слишком большой запрос."
+  },
+  "Richiesta non valida.": {
+    "en": "Invalid request.",
+    "ru": "Некорректный запрос."
+  },
+  "Codice di accesso non valido.": {
+    "en": "Invalid access code.",
+    "ru": "Неверный код доступа."
+  },
+  "Risorsa non trovata.": {
+    "en": "Resource not found.",
+    "ru": "Ресурс не найден."
+  },
+  "Inserisci il codice di accesso amministratore per continuare.": {
+    "en": "Enter the administrator access code to continue.",
+    "ru": "Для продолжения введите код доступа администратора."
+  },
+  "Area riservata al rivenditore.": {
+    "en": "Dealer-only area.",
+    "ru": "Раздел доступен только продавцу."
+  },
+  "Metodo non consentito.": {
+    "en": "Method not allowed.",
+    "ru": "Метод не разрешён."
+  },
+  "Archivio non configurato.": {
+    "en": "Archive is not configured.",
+    "ru": "Архив не настроен."
+  },
+  "Connessione all’archivio non disponibile.": {
+    "en": "Cannot connect to the archive.",
+    "ru": "Не удалось подключиться к архиву."
+  },
+  "Archivio temporaneamente non raggiungibile. Riprova.": {
+    "en": "Archive temporarily unreachable. Try again.",
+    "ru": "Архив временно недоступен. Повторите попытку."
+  },
+  "Preventivo non trovato.": {
+    "en": "Quotation not found.",
+    "ru": "Расчёт не найден."
+  },
+  "Prodotto non trovato.": {
+    "en": "Product not found.",
+    "ru": "Изделие не найдено."
+  },
+  "Salvataggio non completato.": {
+    "en": "Save failed.",
+    "ru": "Не удалось сохранить."
+  },
+  "Configurazione da verificare: salvare una richiesta di verifica.": {
+    "en": "Configuration needs review: save a review request.",
+    "ru": "Конфигурация требует проверки: сохраните запрос на проверку."
+  },
+  "Completare indirizzo, partita IVA e un contatto aziendale prima di emettere un preventivo.": {
+    "en": "Complete your address, VAT number and a business contact before issuing a quotation.",
+    "ru": "Перед выставлением предложения укажите адрес, номер НДС и контакт компании."
+  },
+  "Il documento ha già uno stato definitivo.": {
+    "en": "The document already has a final status.",
+    "ru": "Документ уже имеет окончательный статус."
+  },
+  "Il documento è stato aggiornato: ricaricare l’archivio.": {
+    "en": "The document was updated: reload the archive.",
+    "ru": "Документ изменён: обновите архив."
+  },
+  "Si può confermare solo un preventivo emesso.": {
+    "en": "Only an issued quotation can be confirmed.",
+    "ru": "Подтвердить можно только выставленное предложение."
+  },
+  "Preventivo scaduto: creare una nuova offerta.": {
+    "en": "Quotation expired: create a new offer.",
+    "ru": "Срок предложения истёк: создайте новое."
+  },
+  "Modello da verificare non trovato.": {
+    "en": "Model to review not found.",
+    "ru": "Модель для проверки не найдена."
+  },
+  "Descrizione tecnica originale (italiano)": {
+    "en": "Original technical description (Italian)",
+    "ru": "Техническое описание из оригинала (итальянский)"
+  },
+  "Lingua": {
+    "en": "Language",
+    "ru": "Язык"
+  },
+  "cm": {
+    "en": "cm",
+    "ru": "см"
+  },
+  "m²": {
+    "en": "m²",
+    "ru": "м²"
+  },
+  "/ m²": {
+    "en": "/ m²",
+    "ru": "/ м²"
+  },
+  "/ m": {
+    "en": "/ m",
+    "ru": "/ м"
+  },
+  "cm ·": {
+    "en": "cm ·",
+    "ru": "см ·"
+  },
+  "· p.": {
+    "en": "· p.",
+    "ru": "· стр."
+  },
+  "Misure": {
+    "en": "Dimensions",
+    "ru": "Размеры"
+  },
+  "Finitura": {
+    "en": "Finish",
+    "ru": "Отделка"
+  },
+  "TOTALE": {
+    "en": "TOTAL",
+    "ru": "ИТОГО"
+  },
+  "Validità": {
+    "en": "Validity",
+    "ru": "Срок действия"
+  },
+  "Fonte": {
+    "en": "Source",
+    "ru": "Источник"
+  },
+  "Pagine": {
+    "en": "Pages",
+    "ru": "Страницы"
+  },
+  "Versione": {
+    "en": "Version",
+    "ru": "Версия"
+  },
+  "cad.": {
+    "en": "each",
+    "ru": "шт."
+  },
+  "totale": {
+    "en": "total",
+    "ru": "всего"
+  },
+  "base": {
+    "en": "base",
+    "ru": "база"
+  }
+}

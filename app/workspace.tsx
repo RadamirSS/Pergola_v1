@@ -1,165 +1,298 @@
 'use client';
-
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { ArrowDownToLine, ArrowLeft, ArrowRight, BadgeCheck, BookOpen, Check, ChevronDown, ChevronRight, CircleHelp, ClipboardList, Copy, FileCheck2, FilePlus2, FileText, FolderOpen, House, ImageOff, Leaf, LoaderCircle, LockKeyhole, Package, PanelTop, Plus, Ruler, Search, Settings2, ShieldCheck, SlidersHorizontal, Sparkles, Sun, Trees, TriangleAlert, X } from 'lucide-react';
-import { calculate, defaultCompany, emptySelection, euro } from '../lib/pricing';
+import { calculate, defaultCompany, emptySelection } from '../lib/pricing';
+import { useI18n } from '../lib/i18n/provider';
+import { formatEuro, formatDate, locales } from '../lib/i18n/index';
 import type { Catalog, Client, Company, Product, Quote, QuoteStatus, ReviewOverride, Selection } from '../lib/types';
-
-type WorkspaceData = { catalog: Catalog; company: Company; reviews: Record<string, ReviewOverride> };
+type WorkspaceData = {
+    catalog: Catalog;
+    company: Company;
+    reviews: Record<string, ReviewOverride>;
+};
 type Tab = 'config' | 'history' | 'ai' | 'admin';
 const blankClient: Client = { name: '', address: '', email: '', phone: '', notes: '' };
 const statusLabels: Record<QuoteStatus, string> = { draft: 'Bozza', review: 'Da verificare', issued: 'Emesso', accepted: 'Confermato', cancelled: 'Annullato' };
-const date = (value: string) => new Date(value).toLocaleDateString('it-IT', { timeZone: 'Europe/Rome' });
 async function requestApi<T>(path: string, options?: RequestInit): Promise<T> {
-  const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json', ...options?.headers } });
-  const data = await response.json() as T & { error?: string }; if (!response.ok) throw new Error(data.error ?? 'Operazione non completata.'); return data;
+    const response = await fetch(path, { ...options, headers: { 'Content-Type': 'application/json', ...options?.headers } });
+    const data = await response.json() as T & {
+        error?: string;
+    };
+    if (!response.ok)
+        throw new Error(data.error ?? 'Operazione non completata.');
+    return data;
 }
-function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
-  return <label className="field"><span>{label}</span>{children}{hint && <small>{hint}</small>}</label>;
+function Field({ label, children, hint }: {
+    label: string;
+    children: ReactNode;
+    hint?: string;
+}) {
+    const { localize, t } = useI18n();
+    return <label className="field"><span>{localize(label)}</span>{localize(children)}{localize(hint && <small>{localize(hint)}</small>)}</label>;
 }
-function SectionTitle({ n, title, aside }: { n: string; title: string; aside?: string }) {
-  return <div className="section-title"><span className="step-number">{n}</span><h2>{title}</h2>{aside && <span className="section-aside">{aside}</span>}</div>;
+function SectionTitle({ n, title, aside }: {
+    n: string;
+    title: string;
+    aside?: string;
+}) {
+    const { localize, t } = useI18n();
+    return <div className="section-title"><span className="step-number">{localize(n)}</span><h2>{localize(title)}</h2>{localize(aside && <span className="section-aside">{localize(aside)}</span>)}</div>;
 }
-function Source({ pages }: { pages: number[] }) { return <span className="source"><BookOpen size={13} /> Listino · p. {pages.join(', ')}</span>; }
-function Status({ status }: { status: QuoteStatus }) { return <span className={`badge ${status}`}>{statusLabels[status]}</span>; }
-
-export default function Workspace({ chatGPTSignIn = true, publicMode = false, apiPrefix = '/api' }: { chatGPTSignIn?: boolean; publicMode?: boolean; apiPrefix?: string }) {
-  function api<T>(path: string, options?: RequestInit) { return requestApi<T>(path === '/api/session' ? path : path.replace(/^\/api/, apiPrefix), options); }
-  const [workspace, setWorkspace] = useState<WorkspaceData | null>(null);
-  const [selection, setSelection] = useState<Selection | null>(null);
-  const [tab, setTab] = useState<Tab>('config');
-  const [error, setError] = useState(''); const [toast, setToast] = useState(''); const [busy, setBusy] = useState(false);
-  const [client, setClient] = useState<Client>(blankClient); const [quotes, setQuotes] = useState<Quote[]>([]);
-  const [opened, setOpened] = useState<Quote | null>(null); const [search, setSearch] = useState(''); const [filter, setFilter] = useState('all');
-  const [modelSearch, setModelSearch] = useState(''); const [token, setToken] = useState('');
-  const [companyDraft, setCompanyDraft] = useState<Company>(defaultCompany);
-  const [reviewId, setReviewId] = useState('california');const [reviewNote, setReviewNote] = useState('');const [reviewStatus, setReviewStatus] = useState<'checked' | 'pending'>('checked');
-  const importRef = useRef<HTMLInputElement>(null); const requestKey = useRef('');
-  const [quotesLoading, setQuotesLoading] = useState(false);
-  async function load() {
-    setError('');
-    try { const data = await api<WorkspaceData>('/api/workspace'); setWorkspace(data); setCompanyDraft(data.company); setSelection(s => s && data.catalog.products.some(p => p.id === s.productId) ? s : emptySelection(data.catalog.products[0])); }
-    catch (e) { setError((e as Error).message); }
-  }
-  useEffect(() => { void load(); }, []);
-  useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(''), 4500); return () => clearTimeout(t); }, [toast]);
-  useEffect(() => { requestKey.current = ''; }, [selection, client]);
-  useEffect(() => {
-    if (!workspace) return;
-    const reviewed = workspace.catalog.products.find(p => p.id === reviewId);
-    setReviewStatus(workspace.reviews[reviewId]?.status ?? reviewed?.review ?? 'pending');
-    setReviewNote(workspace.reviews[reviewId]?.note ?? '');
-  }, [workspace, reviewId]);
-  async function loadQuotes() {
-    setQuotesLoading(true);
-    try { const data = await api<{ quotes: Quote[] }>('/api/quotes'); setQuotes(data.quotes); } catch(e) { setError((e as Error).message); } finally { setQuotesLoading(false); }
-  }
-  useEffect(() => { if(tab === 'history' && workspace) void loadQuotes(); }, [tab, Boolean(workspace)]);
-  const product = workspace?.catalog.products.find(p => p.id === selection?.productId);
-  const category = workspace?.catalog.categories.find(c => c.id === product?.categoryId);
-  const calculation = useMemo(() => workspace && product && selection ? calculate(product, selection, workspace.catalog.version, workspace.company, workspace.reviews[product.id]) : null, [workspace, product, selection]);
-  const products = workspace?.catalog.products.filter(p => p.categoryId === product?.categoryId && p.name.toLocaleLowerCase().includes(modelSearch.toLocaleLowerCase())) ?? [];
-  const variant = product?.variants.find(v => v.id === selection?.variantId);
-  const widths = [...new Set(variant?.cells.map(c => c.widthCm) ?? [])].sort((a,b) => a-b);
-  const depths = [...new Set(variant?.cells.filter(c => c.widthCm === selection?.widthCm).map(c => c.depthCm) ?? [])].sort((a,b) => a-b);
-  function change<K extends keyof Selection>(key: K, value: Selection[K]) { setSelection(s => s ? { ...s, [key]: value } : s); }
-  function chooseProduct(p: Product) { setSelection(emptySelection(p));setModelSearch('');setError(''); }
-  function chooseCategory(id: string) { const p = workspace?.catalog.products.find(p => p.categoryId === id); if(p) chooseProduct(p); }
-  function chooseVariant(id: string) {
-    const cell = product?.variants.find(v => v.id === id)?.cells.find(c => !c.special) ?? product?.variants.find(v => v.id === id)?.cells[0];
-    setSelection(s => s ? { ...s, variantId: id, widthCm: cell?.widthCm ?? 100, depthCm: cell?.depthCm ?? 150 } : s);
-  }
-  function chooseWidth(widthCm: number) {
-    const cells=variant?.cells.filter(c=>c.widthCm===widthCm) ?? [];
-    const next=cells.find(c=>c.depthCm===selection?.depthCm) ?? cells.find(c=>!c.special) ?? cells[0];
-    setSelection(s=>s?{...s,widthCm,depthCm:next?.depthCm??s.depthCm}:s);
-  }
-  function toggleOption(id: string, group: string) {
-    if(!selection || !product)return;
-    const inGroup = product.options.filter(o => o.group === group).map(o => o.id);
-    change('optionIds', [...selection.optionIds.filter(o => !inGroup.includes(o)), ...(id ? [id] : [])]);
-  }
-  async function saveQuote(issue: boolean) {
-    if (!selection || busy) return;
-    if(!client.name.trim()) {setError('Inserisci il nome del cliente per salvare il documento.');document.getElementById('client-name')?.focus();return;}
-    setBusy(true);setError('');
-    try {
-      if(!requestKey.current) requestKey.current=crypto.randomUUID();
-      const {quote}=await api<{quote:Quote}>('/api/quotes',{method:'POST',body:JSON.stringify({selection,client,issue,requestKey:requestKey.current})});
-      requestKey.current = '';
-      setOpened(quote);setTab('history');setToast('Documento salvato nell’archivio.');
-    } catch(e) {setError((e as Error).message);} finally {setBusy(false);}
-  }
-  async function updateQuote(status: 'accepted'|'cancelled') {
-    if(!opened)return;setBusy(true);setError('');
-    try {const {quote}=await api<{quote:Quote}>(`/api/quotes/${opened.id}`,{method:'PATCH',body:JSON.stringify({status})});setOpened(quote);void loadQuotes();setToast(status==='accepted'?'Conferma interna registrata.':'Documento annullato.');}catch(e){setError((e as Error).message);}finally{setBusy(false);}
-  }
-  async function adminSave(payload: object) {
-    setBusy(true);setError('');
-    try {const data=await api<WorkspaceData>('/api/admin',{method:'PUT',body:JSON.stringify(payload)});setWorkspace(data);setCompanyDraft(data.company);if(selection && !data.catalog.products.some(p=>p.id===selection.productId))setSelection(emptySelection(data.catalog.products[0]));setToast('Modifiche salvate.');return true;}catch(e){setError((e as Error).message);return false;}finally{setBusy(false);}
-  }
-  function exportCatalog() {
-    const url=URL.createObjectURL(new Blob([JSON.stringify(workspace?.catalog,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`pergola-${workspace?.catalog.version}.json`;a.click();URL.revokeObjectURL(url);
-  }
-  async function importCatalog(file?: File) {
-    if(!file)return;
-    if(file.size>3000000){setError('Il catalogo supera il limite di 3 MB.');return;}
-    try {await adminSave({catalog:JSON.parse(await file.text())});}catch {setError('Il file non contiene un JSON valido.');}
-    if(importRef.current)importRef.current.value='';
-  }
-  const visibleQuotes=quotes.filter(q=>(filter==='all'||q.status===filter)&&`${q.number} ${q.snapshot.client.name} ${q.snapshot.calculation.productName}`.toLowerCase().includes(search.toLowerCase()));
-  const verified=workspace?.catalog.products.filter(p=>(workspace.reviews[p.id]?.status??p.review)==='checked').length??0;
-  const nav = [{ id:'config' as const, label:'Configuratore',icon:SlidersHorizontal },{id:'history' as const,label:'Preventivi',icon:FolderOpen},{id:'ai' as const,label:'Analisi foto AI',icon:Sparkles},{id:'admin' as const,label:'Catalogo e impostazioni',icon:Settings2}].filter(item => !publicMode || item.id !== 'admin');
-
-  return <div className="app-shell">
-    <a className="skip-link" href="#main-content">Vai al contenuto</a>
+function Source({ pages }: {
+    pages: number[];
+}) { const { localize, t } = useI18n(); return <span className="source"><BookOpen size={13}/>{localize(" Listino \u00B7 p. ")}{localize(pages.join(', '))}</span>; }
+function Status({ status }: {
+    status: QuoteStatus;
+}) { const { localize, t } = useI18n(); return <span className={`badge ${status}`}>{localize(statusLabels[status])}</span>; }
+export default function Workspace({ chatGPTSignIn = true, publicMode = false, apiPrefix = '/api' }: {
+    chatGPTSignIn?: boolean;
+    publicMode?: boolean;
+    apiPrefix?: string;
+}) {
+    const { locale, setLocale, t, localize } = useI18n();
+    const euro = (cents: number) => formatEuro(cents, locale);
+    const date = (value: string) => formatDate(value, locale);
+    function api<T>(path: string, options?: RequestInit) { return requestApi<T>(path === '/api/session' ? path : path.replace(/^\/api/, apiPrefix), { ...options, headers: { ...options?.headers, 'x-pergola-language': locale } }); }
+    const [workspace, setWorkspace] = useState<WorkspaceData | null>(null);
+    const [selection, setSelection] = useState<Selection | null>(null);
+    const [tab, setTab] = useState<Tab>('config');
+    const [error, setError] = useState('');
+    const [toast, setToast] = useState('');
+    const [busy, setBusy] = useState(false);
+    const [client, setClient] = useState<Client>(blankClient);
+    const [quotes, setQuotes] = useState<Quote[]>([]);
+    const [opened, setOpened] = useState<Quote | null>(null);
+    const [search, setSearch] = useState('');
+    const [filter, setFilter] = useState('all');
+    const [modelSearch, setModelSearch] = useState('');
+    const [token, setToken] = useState('');
+    const [companyDraft, setCompanyDraft] = useState<Company>(defaultCompany);
+    const [reviewId, setReviewId] = useState('california');
+    const [reviewNote, setReviewNote] = useState('');
+    const [reviewStatus, setReviewStatus] = useState<'checked' | 'pending'>('checked');
+    const importRef = useRef<HTMLInputElement>(null);
+    const requestKey = useRef('');
+    const [quotesLoading, setQuotesLoading] = useState(false);
+    async function load() {
+        setError('');
+        try {
+            const data = await api<WorkspaceData>('/api/workspace');
+            setWorkspace(data);
+            setCompanyDraft(data.company);
+            setSelection(s => s && data.catalog.products.some(p => p.id === s.productId) ? s : emptySelection(data.catalog.products[0]));
+        }
+        catch (e) {
+            setError((e as Error).message);
+        }
+    }
+    useEffect(() => { void load(); }, []);
+    useEffect(() => { if (!toast)
+        return; const t = setTimeout(() => setToast(''), 4500); return () => clearTimeout(t); }, [toast]);
+    useEffect(() => { requestKey.current = ''; }, [selection, client]);
+    useEffect(() => {
+        if (!workspace)
+            return;
+        const reviewed = workspace.catalog.products.find(p => p.id === reviewId);
+        setReviewStatus(workspace.reviews[reviewId]?.status ?? reviewed?.review ?? 'pending');
+        setReviewNote(workspace.reviews[reviewId]?.note ?? '');
+    }, [workspace, reviewId]);
+    async function loadQuotes() {
+        setQuotesLoading(true);
+        try {
+            const data = await api<{
+                quotes: Quote[];
+            }>('/api/quotes');
+            setQuotes(data.quotes);
+        }
+        catch (e) {
+            setError((e as Error).message);
+        }
+        finally {
+            setQuotesLoading(false);
+        }
+    }
+    useEffect(() => { if (tab === 'history' && workspace)
+        void loadQuotes(); }, [tab, Boolean(workspace)]);
+    const product = workspace?.catalog.products.find(p => p.id === selection?.productId);
+    const category = workspace?.catalog.categories.find(c => c.id === product?.categoryId);
+    const calculation = useMemo(() => workspace && product && selection ? calculate(product, selection, workspace.catalog.version, workspace.company, workspace.reviews[product.id]) : null, [workspace, product, selection]);
+    const products = workspace?.catalog.products.filter(p => p.categoryId === product?.categoryId && t(p.name).toLocaleLowerCase(locales[locale]).includes(modelSearch.toLocaleLowerCase(locales[locale]))) ?? [];
+    const variant = product?.variants.find(v => v.id === selection?.variantId);
+    const widths = [...new Set(variant?.cells.map(c => c.widthCm) ?? [])].sort((a, b) => a - b);
+    const depths = [...new Set(variant?.cells.filter(c => c.widthCm === selection?.widthCm).map(c => c.depthCm) ?? [])].sort((a, b) => a - b);
+    function change<K extends keyof Selection>(key: K, value: Selection[K]) { setSelection(s => s ? { ...s, [key]: value } : s); }
+    function chooseProduct(p: Product) { setSelection(emptySelection(p)); setModelSearch(''); setError(''); }
+    function chooseCategory(id: string) { const p = workspace?.catalog.products.find(p => p.categoryId === id); if (p)
+        chooseProduct(p); }
+    function chooseVariant(id: string) {
+        const cell = product?.variants.find(v => v.id === id)?.cells.find(c => !c.special) ?? product?.variants.find(v => v.id === id)?.cells[0];
+        setSelection(s => s ? { ...s, variantId: id, widthCm: cell?.widthCm ?? 100, depthCm: cell?.depthCm ?? 150 } : s);
+    }
+    function chooseWidth(widthCm: number) {
+        const cells = variant?.cells.filter(c => c.widthCm === widthCm) ?? [];
+        const next = cells.find(c => c.depthCm === selection?.depthCm) ?? cells.find(c => !c.special) ?? cells[0];
+        setSelection(s => s ? { ...s, widthCm, depthCm: next?.depthCm ?? s.depthCm } : s);
+    }
+    function toggleOption(id: string, group: string) {
+        if (!selection || !product)
+            return;
+        const inGroup = product.options.filter(o => o.group === group).map(o => o.id);
+        change('optionIds', [...selection.optionIds.filter(o => !inGroup.includes(o)), ...(id ? [id] : [])]);
+    }
+    async function saveQuote(issue: boolean) {
+        if (!selection || busy)
+            return;
+        if (!client.name.trim()) {
+            setError('Inserisci il nome del cliente per salvare il documento.');
+            document.getElementById('client-name')?.focus();
+            return;
+        }
+        setBusy(true);
+        setError('');
+        try {
+            if (!requestKey.current)
+                requestKey.current = crypto.randomUUID();
+            const { quote } = await api<{
+                quote: Quote;
+            }>('/api/quotes', { method: 'POST', body: JSON.stringify({ selection, client, issue, requestKey: requestKey.current }) });
+            requestKey.current = '';
+            setOpened(quote);
+            setTab('history');
+            setToast('Documento salvato nell’archivio.');
+        }
+        catch (e) {
+            setError((e as Error).message);
+        }
+        finally {
+            setBusy(false);
+        }
+    }
+    async function updateQuote(status: 'accepted' | 'cancelled') {
+        if (!opened)
+            return;
+        setBusy(true);
+        setError('');
+        try {
+            const { quote } = await api<{
+                quote: Quote;
+            }>(`/api/quotes/${opened.id}`, { method: 'PATCH', body: JSON.stringify({ status }) });
+            setOpened(quote);
+            void loadQuotes();
+            setToast(status === 'accepted' ? 'Conferma interna registrata.' : 'Documento annullato.');
+        }
+        catch (e) {
+            setError((e as Error).message);
+        }
+        finally {
+            setBusy(false);
+        }
+    }
+    async function adminSave(payload: object) {
+        setBusy(true);
+        setError('');
+        try {
+            const data = await api<WorkspaceData>('/api/admin', { method: 'PUT', body: JSON.stringify(payload) });
+            setWorkspace(data);
+            setCompanyDraft(data.company);
+            if (selection && !data.catalog.products.some(p => p.id === selection.productId))
+                setSelection(emptySelection(data.catalog.products[0]));
+            setToast('Modifiche salvate.');
+            return true;
+        }
+        catch (e) {
+            setError((e as Error).message);
+            return false;
+        }
+        finally {
+            setBusy(false);
+        }
+    }
+    function exportCatalog() {
+        const url = URL.createObjectURL(new Blob([JSON.stringify(workspace?.catalog, null, 2)], { type: 'application/json' }));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `pergola-${workspace?.catalog.version}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+    async function importCatalog(file?: File) {
+        if (!file)
+            return;
+        if (file.size > 3000000) {
+            setError('Il catalogo supera il limite di 3 MB.');
+            return;
+        }
+        try {
+            await adminSave({ catalog: JSON.parse(await file.text()) });
+        }
+        catch {
+            setError('Il file non contiene un JSON valido.');
+        }
+        if (importRef.current)
+            importRef.current.value = '';
+    }
+    const visibleQuotes = quotes.filter(q => (filter === 'all' || q.status === filter) && `${q.number} ${q.snapshot.client.name} ${t(q.snapshot.calculation.productName)}`.toLowerCase().includes(search.toLowerCase()));
+    const verified = workspace?.catalog.products.filter(p => (workspace.reviews[p.id]?.status ?? p.review) === 'checked').length ?? 0;
+    const nav = [{ id: 'config' as const, label: 'Configuratore', icon: SlidersHorizontal }, { id: 'history' as const, label: 'Preventivi', icon: FolderOpen }, { id: 'ai' as const, label: 'Analisi foto AI', icon: Sparkles }, { id: 'admin' as const, label: 'Catalogo e impostazioni', icon: Settings2 }].filter(item => !publicMode || item.id !== 'admin');
+    return <div className="app-shell">
+    <a className="skip-link" href="#main-content">{localize("Vai al contenuto")}</a>
     <aside className="sidebar">
-      <a className="brand" href="/" aria-label="Pergola home"><span className="brand-mark"><Leaf size={24}/></span><span>Pergola<span className="brand-dot">.</span><small>SPAZI DA VIVERE</small></span></a>
-      <div className="nav-label">AREA DI LAVORO</div>
-      <nav aria-label="Navigazione principale">{nav.map(({id,label,icon:Icon})=><button key={id} className={`nav-item ${tab===id?'active':''}`} onClick={()=>{setTab(id);setOpened(null);setError('');}} aria-current={tab===id?'page':undefined}><Icon size={18}/><span>{label}</span>{id==='ai'?<span className="soon-dot" title="Non disponibile"/>:tab===id&&<ChevronRight size={14}/>}</button>)}</nav>
-      <div className="sidebar-bottom"><div className="catalog-stamp"><BookOpen size={21}/><div><strong>IC Tende</strong><span>Catalogo prodotti 2023</span></div></div><p>Ogni spazio ha il suo potenziale.<br/>Troviamo la soluzione giusta.</p><div className="workspace-member"><span className="member-avatar">P</span><div><strong>{workspace?.company.name??'Pergola'}</strong><small>{publicMode?'Configuratore pubblico':'Area riservata'}</small></div><LockKeyhole size={13}/></div></div>
+      <a className="brand" href="/" aria-label={t("Pergola home")}><span className="brand-mark"><Leaf size={24}/></span><span>{localize("Pergola")}<span className="brand-dot">{localize(".")}</span><small>{localize("SPAZI DA VIVERE")}</small></span></a>
+      <div className="nav-label">{localize("AREA DI LAVORO")}</div>
+      <nav aria-label={t("Navigazione principale")}>{localize(nav.map(({ id, label, icon: Icon }) => <button key={id} className={`nav-item ${tab === id ? 'active' : ''}`} onClick={() => { setTab(id); setOpened(null); setError(''); }} aria-current={tab === id ? 'page' : undefined}><Icon size={18}/><span>{localize(label)}</span>{localize(id === 'ai' ? <span className="soon-dot" title={t("Non disponibile")}/> : tab === id && <ChevronRight size={14}/>)}</button>))}</nav>
+      <div className="sidebar-bottom"><div className="catalog-stamp"><BookOpen size={21}/><div><strong>{localize("IC Tende")}</strong><span>{localize("Catalogo prodotti 2023")}</span></div></div><p>{localize("Ogni spazio ha il suo potenziale.")}<br />{localize("Troviamo la soluzione giusta.")}</p><div className="workspace-member"><span className="member-avatar">{localize("P")}</span><div><strong>{workspace?.company.name ?? 'Pergola'}</strong><small>{localize(publicMode ? 'Configuratore pubblico' : 'Area riservata')}</small></div><LockKeyhole size={13}/></div></div>
     </aside>
     <div className="main-wrap">
-      <header className="topbar"><div><span className="breadcrumb">Area di lavoro</span><ChevronRight size={13}/><strong>{nav.find(n=>n.id===tab)?.label}</strong></div><span className={`connection ${workspace?'connected':''}`}><i/>{workspace?'Archivio connesso':'Connessione archivio'}</span></header>
+      <header className="topbar"><div className="language-switch" role="group" aria-label={t('Lingua')}>{(['it', 'en', 'ru'] as const).map(language => <button type="button" key={language} lang={language} aria-label={{it:'Italiano',en:'English',ru:'Русский'}[language]} aria-pressed={locale === language} onClick={() => setLocale(language)}>{language.toUpperCase()}</button>)}</div><div><span className="breadcrumb">{localize("Area di lavoro")}</span><ChevronRight size={13}/><strong>{localize(nav.find(n => n.id === tab)?.label)}</strong></div><span className={`connection ${workspace ? 'connected' : ''}`}><i />{localize(workspace ? 'Archivio connesso' : 'Connessione archivio')}</span></header>
       <main id="main-content">
-        {error&&<div role="alert" className="global-error"><TriangleAlert size={18}/><span>{error}</span><button aria-label="Chiudi errore" onClick={()=>setError('')}><X size={17}/></button></div>}
-        {!workspace?<div className="loading-page"><Leaf size={36}/><h1>Il tuo spazio di lavoro.</h1><p>{error?'Accedi o riprova a collegare l’archivio.':'Stiamo preparando il catalogo IC Tende…'}</p>{!error?<LoaderCircle className="spin"/>:<><button className="primary" onClick={()=>void load()}>Riprova</button>{chatGPTSignIn && <a href="/signin-with-chatgpt?return_to=/" target="_top" className="text-link">Accedi con ChatGPT</a>}{!publicMode && <form className="access-form" onSubmit={async e=>{e.preventDefault();try{await api('/api/session',{method:'POST',body:JSON.stringify({token})});void load();}catch(e){setError((e as Error).message);}}}><label>Codice di accesso amministratore<input type="password" autoComplete="current-password" value={token} onChange={e=>setToken(e.target.value)}/></label><button className="secondary">Accedi</button></form>}</>}</div>:<>
-        {tab==='config'&&product&&selection&&calculation&&<>
-          <div className="page-heading"><div><span className="eyebrow">CONFIGURATORE SU MISURA</span><h1>Il tuo spazio, <em>la tua misura.</em></h1><p>Dall’idea al preventivo. Scegli, configura e dai forma al tuo progetto.</p></div><div className="heading-seal"><ShieldCheck size={18}/><span>Prezzi da listino<br/><strong>IC Tende 2023</strong></span></div></div>
-          <div className="category-strip" role="group" aria-label="Famiglie di prodotto">{workspace.catalog.categories.map(c=><button key={c.id} aria-pressed={category?.id===c.id} className={`category-chip ${category?.id===c.id?'selected':''}`} onClick={()=>chooseCategory(c.id)}>{c.id==='pergole'?<House size={16}/>:c.id==='bracci'?<Sun size={16}/>:c.id==='giardino'?<Trees size={16}/>:c.id==='gazebi'?<Package size={16}/>:<PanelTop size={16}/>}<span>{c.name}</span></button>)}</div>
+        {localize(error && <div role="alert" className="global-error"><TriangleAlert size={18}/><span>{localize(error)}</span><button aria-label={t("Chiudi errore")} onClick={() => setError('')}><X size={17}/></button></div>)}
+        {!workspace ? <div className="loading-page"><Leaf size={36}/><h1>{localize("Il tuo spazio di lavoro.")}</h1><p>{localize(error ? 'Accedi o riprova a collegare l’archivio.' : 'Stiamo preparando il catalogo IC Tende…')}</p>{localize(!error ? <LoaderCircle className="spin"/> : <><button className="primary" onClick={() => void load()}>{localize("Riprova")}</button>{localize(chatGPTSignIn && <a href="/signin-with-chatgpt?return_to=/" target="_top" className="text-link">{localize("Accedi con ChatGPT")}</a>)}{localize(!publicMode && <form className="access-form" onSubmit={async (e) => { e.preventDefault(); try {
+            await api('/api/session', { method: 'POST', body: JSON.stringify({ token }) });
+            void load();
+        }
+        catch (e) {
+            setError((e as Error).message);
+        } }}><label>{localize("Codice di accesso amministratore")}<input type="password" autoComplete="current-password" value={token} onChange={e => setToken(e.target.value)}/></label><button className="secondary">{localize("Accedi")}</button></form>)}</>)}</div> : <>
+        {localize(tab === 'config' && product && selection && calculation && <>
+          <div className="page-heading"><div><span className="eyebrow">{localize("CONFIGURATORE SU MISURA")}</span><h1>{localize("Il tuo spazio, ")}<em>{localize("la tua misura.")}</em></h1><p>{localize("Dall\u2019idea al preventivo. Scegli, configura e dai forma al tuo progetto.")}</p></div><div className="heading-seal"><ShieldCheck size={18}/><span>{localize("Prezzi da listino")}<br /><strong>{localize("IC Tende 2023")}</strong></span></div></div>
+          <div className="category-strip" role="group" aria-label={t("Famiglie di prodotto")}>{localize(workspace.catalog.categories.map(c => <button key={c.id} aria-pressed={category?.id === c.id} className={`category-chip ${category?.id === c.id ? 'selected' : ''}`} onClick={() => chooseCategory(c.id)}>{localize(c.id === 'pergole' ? <House size={16}/> : c.id === 'bracci' ? <Sun size={16}/> : c.id === 'giardino' ? <Trees size={16}/> : c.id === 'gazebi' ? <Package size={16}/> : <PanelTop size={16}/>)}<span>{localize(c.name)}</span></button>))}</div>
           <div className="config-layout"><div className="config-main">
-            <section className="card product-section"><SectionTitle n="01" title="Scegli il modello" aside={`${products.length} modelli`}/>
-              <div className="model-picker"><div className="search-box"><Search size={16}/><input aria-label="Cerca modello" placeholder="Cerca un modello…" value={modelSearch} onChange={e=>setModelSearch(e.target.value)}/>{modelSearch&&<button aria-label="Cancella ricerca modello" onClick={()=>setModelSearch('')}><X size={15}/></button>}</div><div className="select-shell"><select aria-label="Modello" value={product.id} onChange={e=>{const p=workspace.catalog.products.find(p=>p.id===e.target.value);if(p)chooseProduct(p);}}>{!products.some(p=>p.id===product.id)&&<option value={product.id}>{product.name}</option>}{products.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select><ChevronDown size={15}/></div></div>
-              <div className="product-visual">{product.image?<img key={product.image} src={product.image} alt={`${product.name} — immagine dal catalogo IC Tende`}/>:<div className="image-placeholder"><House size={60}/></div>}<span className="product-brand">IC TENDE</span><span className="visual-caption">Immagine di catalogo · finiture indicative</span></div>
-              <div className="product-info"><div><span className="eyebrow">{category?.name}</span><h2>{product.name}</h2></div><span className={`review-pill ${(workspace.reviews[product.id]?.status??product.review)==='checked'?'checked':''}`}><span/>{(workspace.reviews[product.id]?.status??product.review)==='checked'?'Dati controllati':'Verifica richiesta'}</span></div>
-              <p className="product-description">{product.description}</p><Source pages={product.pages}/>
+            <section className="card product-section"><SectionTitle n="01" title={t("Scegli il modello")} aside={t(`${products.length} modelli`)}/>
+              <div className="model-picker"><div className="search-box"><Search size={16}/><input aria-label={t("Cerca modello")} placeholder={t("Cerca un modello\u2026")} value={modelSearch} onChange={e => setModelSearch(e.target.value)}/>{localize(modelSearch && <button aria-label={t("Cancella ricerca modello")} onClick={() => setModelSearch('')}><X size={15}/></button>)}</div><div className="select-shell"><select aria-label={t("Modello")} value={product.id} onChange={e => { const p = workspace.catalog.products.find(p => p.id === e.target.value); if (p)
+                chooseProduct(p); }}>{localize(!products.some(p => p.id === product.id) && <option value={product.id}>{localize(product.name)}</option>)}{localize(products.map(p => <option key={p.id} value={p.id}>{localize(p.name)}</option>))}</select><ChevronDown size={15}/></div></div>
+              <div className="product-visual">{localize(product.image ? <img key={product.image} src={product.image} alt={t(`${product.name} — immagine dal catalogo IC Tende`)}/> : <div className="image-placeholder"><House size={60}/></div>)}<span className="product-brand">{localize("IC TENDE")}</span><span className="visual-caption">{localize("Immagine di catalogo \u00B7 finiture indicative")}</span></div>
+              <div className="product-info"><div><span className="eyebrow">{localize(category?.name)}</span><h2>{localize(product.name)}</h2></div><span className={`review-pill ${(workspace.reviews[product.id]?.status ?? product.review) === 'checked' ? 'checked' : ''}`}><span />{localize((workspace.reviews[product.id]?.status ?? product.review) === 'checked' ? 'Dati controllati' : 'Verifica richiesta')}</span></div>
+              <p className="product-description">{locale === 'it' ? product.description : t(category?.description ?? '')}</p>{locale !== 'it' && <details className="technical-notes original-description"><summary>{t('Descrizione tecnica originale (italiano)')}</summary><p>{product.description}</p></details>}<Source pages={product.pages}/>
             </section>
-            <section className="card section-pad"><SectionTitle n="02" title="Definisci le misure" aside="Tutte le misure in cm"/>
-              {product.type==='grid'?<><Field label="Configurazione / variante"><select value={selection.variantId} onChange={e=>chooseVariant(e.target.value)}>{product.variants.length===0&&<option value="">Preventivo manuale richiesto</option>}{product.variants.map(v=><option key={v.id} value={v.id}>{v.label} · p. {v.page}</option>)}</select></Field><div className="field-grid"><Field label="Larghezza"><div className="unit-input"><select value={selection.widthCm} onChange={e=>chooseWidth(Number(e.target.value))}>{widths.map(w=><option key={w} value={w}>{w}</option>)}</select><span>cm</span></div></Field><Field label={category?.id==='caduta'?'Altezza / caduta':'Sporgenza'}><div className="unit-input"><select value={selection.depthCm} onChange={e=>change('depthCm',Number(e.target.value))}>{depths.map(d=><option key={d} value={d}>{d}</option>)}</select><span>cm</span></div></Field></div><div className="info-note"><Ruler size={16}/><span>Le misure disponibili seguono le tabelle del produttore. Per misure intermedie è richiesta una verifica dedicata.</span></div></>:product.type==='sqm'?<><div className="field-grid"><Field label="Larghezza"><div className="unit-input"><input type="number" min="1" max="3000" step="0.1" value={selection.widthCm} onChange={e=>change('widthCm',Number(e.target.value))}/><span>cm</span></div></Field><Field label="Altezza"><div className="unit-input"><input type="number" min="1" max="3000" step="0.1" value={selection.depthCm} onChange={e=>change('depthCm',Number(e.target.value))}/><span>cm</span></div></Field></div><div className="area-info"><span>Superficie reale<strong>{calculation.areaSqm.toLocaleString('it-IT')} m²</strong></span><span>Superficie fatturabile<strong>{calculation.billedAreaSqm.toLocaleString('it-IT')} m²</strong></span><span>Tariffa di listino<strong>{euro(product.sqmCents??0)} / m²</strong></span></div></>:<Field label="Dimensioni e materiale"><select value={selection.fixedId} onChange={e=>{const f=product.fixed.find(f=>f.id===e.target.value);const dims=f?.label.match(/(\d+)\s*[x×]\s*(\d+)/);setSelection(s=>s?{...s,fixedId:e.target.value,widthCm:dims?Number(dims[1]):s.widthCm,depthCm:dims?Number(dims[2]):s.depthCm}:s);}}>{product.fixed.length===0&&<option value="">Quotazione manuale richiesta</option>}{product.fixed.map(f=><option key={f.id} value={f.id}>{f.label} · {euro(f.cents)}</option>)}</select></Field>}
-              <Field label="Quantità"><input className="quantity-input" type="number" min="1" max="100" step="1" value={selection.quantity} onChange={e=>change('quantity',Number(e.target.value))}/></Field>
+            <section className="card section-pad"><SectionTitle n="02" title={t("Definisci le misure")} aside={t("Tutte le misure in cm")}/>
+              {localize(product.type === 'grid' ? <><Field label={t("Configurazione / variante")}><select value={selection.variantId} onChange={e => chooseVariant(e.target.value)}>{localize(product.variants.length === 0 && <option value="">{localize("Preventivo manuale richiesto")}</option>)}{localize(product.variants.map(v => <option key={v.id} value={v.id}>{localize(v.label)}{localize(" \u00B7 p. ")}{localize(v.page)}</option>))}</select></Field><div className="field-grid"><Field label={t("Larghezza")}><div className="unit-input"><select value={selection.widthCm} onChange={e => chooseWidth(Number(e.target.value))}>{localize(widths.map(w => <option key={w} value={w}>{localize(w)}</option>))}</select><span>{localize("cm")}</span></div></Field><Field label={t(category?.id === 'caduta' ? 'Altezza / caduta' : 'Sporgenza')}><div className="unit-input"><select value={selection.depthCm} onChange={e => change('depthCm', Number(e.target.value))}>{localize(depths.map(d => <option key={d} value={d}>{localize(d)}</option>))}</select><span>{localize("cm")}</span></div></Field></div><div className="info-note"><Ruler size={16}/><span>{localize("Le misure disponibili seguono le tabelle del produttore. Per misure intermedie \u00E8 richiesta una verifica dedicata.")}</span></div></> : product.type === 'sqm' ? <><div className="field-grid"><Field label={t("Larghezza")}><div className="unit-input"><input type="number" min="1" max="3000" step="0.1" value={selection.widthCm} onChange={e => change('widthCm', Number(e.target.value))}/><span>{localize("cm")}</span></div></Field><Field label={t("Altezza")}><div className="unit-input"><input type="number" min="1" max="3000" step="0.1" value={selection.depthCm} onChange={e => change('depthCm', Number(e.target.value))}/><span>{localize("cm")}</span></div></Field></div><div className="area-info"><span>{localize("Superficie reale")}<strong>{localize(calculation.areaSqm.toLocaleString(locales[locale]))}{localize(" m\u00B2")}</strong></span><span>{localize("Superficie fatturabile")}<strong>{localize(calculation.billedAreaSqm.toLocaleString(locales[locale]))}{localize(" m\u00B2")}</strong></span><span>{localize("Tariffa di listino")}<strong>{localize(euro(product.sqmCents ?? 0))}{localize(" / m\u00B2")}</strong></span></div></> : <Field label={t("Dimensioni e materiale")}><select value={selection.fixedId} onChange={e => { const f = product.fixed.find(f => f.id === e.target.value); const dims = f?.label.match(/(\d+)\s*[x×]\s*(\d+)/); setSelection(s => s ? { ...s, fixedId: e.target.value, widthCm: dims ? Number(dims[1]) : s.widthCm, depthCm: dims ? Number(dims[2]) : s.depthCm } : s); }}>{localize(product.fixed.length === 0 && <option value="">{localize("Quotazione manuale richiesta")}</option>)}{localize(product.fixed.map(f => <option key={f.id} value={f.id}>{localize(f.label)}{localize(" \u00B7 ")}{localize(euro(f.cents))}</option>))}</select></Field>)}
+              <Field label={t("Quantit\u00E0")}><input className="quantity-input" type="number" min="1" max="100" step="1" value={selection.quantity} onChange={e => change('quantity', Number(e.target.value))}/></Field>
             </section>
-            <section className="card section-pad"><SectionTitle n="03" title="Finiture e dettagli"/>
-              <span className="field-label">Colore della struttura</span><div className="color-options">{product.colors.map(c=><button className={`color-choice ${selection.colorId===c.id?'selected':''}`} key={c.id} onClick={()=>change('colorId',c.id)} aria-pressed={selection.colorId===c.id}><span className="color-swatch" style={{background:c.hex}}>{selection.colorId===c.id&&<Check size={14} color={c.hex==='#242523'?'white':'#233c31'}/>}</span><span>{c.label}</span></button>)}</div><p className="muted small">Altri colori, tessuti e accessori non elencati richiedono una quotazione dedicata.</p>
-              {[...new Set(product.options.map(o=>o.group))].map(group=><Field key={group} label={({tessuto:'Tessuto',motore:'Motorizzazione IC Tende',controllo:'Comandi',sensore:'Sensori',smart:'Domotica',tettuccio:'Tettuccio',tappi:'Tappi tettuccio',molla:'Molla',cucitura:'Cucitura',confezione:'Confezione'} as Record<string,string>)[group]??group}><select value={selection.optionIds.find(id=>product.options.find(o=>o.id===id)?.group===group)??''} onChange={e=>toggleOption(e.target.value,group)}><option value="">{group==='tessuto'?'Tessuto di serie · incluso':'Nessuna opzione aggiunta'}</option>{product.options.filter(o=>o.group===group).map(o=><option key={o.id} value={o.id}>{o.label} · {o.unit==='percent'?`+${(o.basisPoints??0)/100}%`:euro(o.cents??0)+(o.unit==='width-m'?' / m':'')}</option>)}</select></Field>)}
-              <details className="technical-notes"><summary><CircleHelp size={16}/> Note tecniche e condizioni <ChevronDown size={14}/></summary><ul>{product.notes.map((n,i)=><li key={i}>{n}</li>)}<li>Prezzi del catalogo 2023: attualità da confermare con il produttore.</li></ul></details>
+            <section className="card section-pad"><SectionTitle n="03" title={t("Finiture e dettagli")}/>
+              <span className="field-label">{localize("Colore della struttura")}</span><div className="color-options">{localize(product.colors.map(c => <button className={`color-choice ${selection.colorId === c.id ? 'selected' : ''}`} key={c.id} onClick={() => change('colorId', c.id)} aria-pressed={selection.colorId === c.id}><span className="color-swatch" style={{ background: c.hex }}>{localize(selection.colorId === c.id && <Check size={14} color={c.hex === '#242523' ? 'white' : '#233c31'}/>)}</span><span>{localize(c.label)}</span></button>))}</div><p className="muted small">{localize("Altri colori, tessuti e accessori non elencati richiedono una quotazione dedicata.")}</p>
+              {localize([...new Set(product.options.map(o => o.group))].map(group => <Field key={group} label={t(({ tessuto: 'Tessuto', motore: 'Motorizzazione IC Tende', controllo: 'Comandi', sensore: 'Sensori', smart: 'Domotica', tettuccio: 'Tettuccio', tappi: 'Tappi tettuccio', molla: 'Molla', cucitura: 'Cucitura', confezione: 'Confezione' } as Record<string, string>)[group] ?? group)}><select value={selection.optionIds.find(id => product.options.find(o => o.id === id)?.group === group) ?? ''} onChange={e => toggleOption(e.target.value, group)}><option value="">{localize(group === 'tessuto' ? 'Tessuto di serie · incluso' : 'Nessuna opzione aggiunta')}</option>{localize(product.options.filter(o => o.group === group).map(o => <option key={o.id} value={o.id}>{localize(o.label)}{localize(" \u00B7 ")}{localize(o.unit === 'percent' ? `+${(o.basisPoints ?? 0) / 100}%` : euro(o.cents ?? 0) + (o.unit === 'width-m' ? ' / m' : ''))}</option>))}</select></Field>))}
+              <details className="technical-notes"><summary><CircleHelp size={16}/>{localize(" Note tecniche e condizioni ")}<ChevronDown size={14}/></summary><ul>{localize(product.notes.map((n, i) => <li key={i}>{localize(n)}</li>))}<li>{localize("Prezzi del catalogo 2023: attualit\u00E0 da confermare con il produttore.")}</li></ul></details>
             </section>
-            <section className="card section-pad"><SectionTitle n="04" title="Prepara il preventivo"/><div className="field-grid"><Field label="Cliente / ragione sociale *"><input id="client-name" required maxLength={500} autoComplete="organization" placeholder="Nome del cliente" value={client.name} onChange={e=>setClient({...client,name:e.target.value})}/></Field><Field label="Indirizzo del progetto"><input maxLength={500} autoComplete="street-address" placeholder="Via, città" value={client.address} onChange={e=>setClient({...client,address:e.target.value})}/></Field><Field label="Email"><input type="email" maxLength={254} autoComplete="email" placeholder="nome@esempio.it" value={client.email} onChange={e=>setClient({...client,email:e.target.value})}/></Field><Field label="Telefono"><input type="tel" maxLength={100} autoComplete="tel" placeholder="+39 …" value={client.phone} onChange={e=>setClient({...client,phone:e.target.value})}/></Field></div>{!publicMode && <div className="field-grid three"><Field label="Posa in opera · totale €"><input type="number" min="0" max="1000000" step="0.01" value={selection.installationCents/100} onChange={e=>change('installationCents',Math.round(Number(e.target.value)*100))}/></Field><Field label="Trasporto · totale €"><input type="number" min="0" max="1000000" step="0.01" value={selection.deliveryCents/100} onChange={e=>change('deliveryCents',Math.round(Number(e.target.value)*100))}/></Field><Field label="Sconto prodotti %"><input type="number" min="0" max="50" step="0.1" value={selection.discountBasisPoints/100} onChange={e=>change('discountBasisPoints',Math.round(Number(e.target.value)*100))}/></Field></div>}<Field label="Note del progetto"><textarea rows={3} maxLength={3000} placeholder="Esigenze particolari, dettagli da confermare…" value={client.notes} onChange={e=>setClient({...client,notes:e.target.value})}/></Field></section>
-          </div><aside className="summary-wrap"><section className="summary-card"><div className="summary-title"><ClipboardList size={19}/><h2>Il tuo progetto</h2><span className="live-label"><i/> LIVE</span></div><div className="summary-product"><span className="eyebrow">{category?.name}</span><h3>{product.name}</h3><p>{product.type==='fixed'?calculation.variantLabel:`${selection.widthCm} × ${selection.depthCm} cm · ${selection.quantity} ${selection.quantity===1?'pezzo':'pezzi'}`}</p><span>{calculation.colorLabel}</span></div><div className="summary-lines">{calculation.lines.map((line,i)=><div key={i}><span>{line.label}</span><strong>{euro(line.cents)}</strong></div>)}{!calculation.available&&<p className="small muted">Completa una configurazione valida per calcolare il prezzo.</p>}</div><div className="summary-tax"><div><span>Imponibile</span><strong>{euro(calculation.subtotalCents)}</strong></div><div><span>IVA {workspace.company.vatBasisPoints/100}%</span><span>{euro(calculation.vatCents)}</span></div></div><div className="summary-total"><span>Totale progetto<small>IVA inclusa</small></span><strong>{calculation.available?euro(calculation.totalCents):'—'}</strong></div>
-              {calculation.errors.map((e,i)=><div className="notice danger" key={i}><TriangleAlert size={15}/><span>{e}</span></div>)}{calculation.warnings.map((w,i)=><div className="notice" key={i}><CircleHelp size={15}/><span>{w}</span></div>)}
-              <button className="primary full" disabled={busy||!calculation.available} onClick={()=>void saveQuote(false)}>{busy?<LoaderCircle className="spin" size={17}/>:<FilePlus2 size={17}/>} {calculation.issuable?(publicMode?'Salva progetto e PDF':'Salva bozza'):'Richiedi verifica'}<ArrowRight size={16}/></button>
-              {!publicMode&&calculation.issuable&&<button className="secondary full" disabled={busy} onClick={()=>void saveQuote(true)}><FileCheck2 size={16}/> Emetti preventivo</button>}
-              <div className="summary-foot"><ShieldCheck size={14}/><span>{publicMode?'I tuoi progetti sono visibili solo da questo browser.':'Salvataggio nell’archivio condiviso.'}<br/>PDF disponibile dopo il salvataggio.</span></div></section><div className="source-card"><BookOpen size={19}/><div><strong>Un prezzo, una fonte.</strong><p>Tabelle e condizioni dal catalogo originale. Nessun prezzo interpolato.</p><Source pages={variant?[variant.page]:product.pages}/></div></div><div className="ai-mini"><ImageOff size={20}/><span>Visualizzazione AI<small>Funzione temporaneamente non disponibile</small></span><LockKeyhole size={13}/></div></aside></div>
+            <section className="card section-pad"><SectionTitle n="04" title={t("Prepara il preventivo")}/><div className="field-grid"><Field label={t("Cliente / ragione sociale *")}><input id="client-name" required maxLength={500} autoComplete="organization" placeholder={t("Nome del cliente")} value={client.name} onChange={e => setClient({ ...client, name: e.target.value })}/></Field><Field label={t("Indirizzo del progetto")}><input maxLength={500} autoComplete="street-address" placeholder={t("Via, citt\u00E0")} value={client.address} onChange={e => setClient({ ...client, address: e.target.value })}/></Field><Field label={t("Email")}><input type="email" maxLength={254} autoComplete="email" placeholder={t("nome@esempio.it")} value={client.email} onChange={e => setClient({ ...client, email: e.target.value })}/></Field><Field label={t("Telefono")}><input type="tel" maxLength={100} autoComplete="tel" placeholder={t("+39 \u2026")} value={client.phone} onChange={e => setClient({ ...client, phone: e.target.value })}/></Field></div>{localize(!publicMode && <div className="field-grid three"><Field label={t("Posa in opera \u00B7 totale \u20AC")}><input type="number" min="0" max="1000000" step="0.01" value={selection.installationCents / 100} onChange={e => change('installationCents', Math.round(Number(e.target.value) * 100))}/></Field><Field label={t("Trasporto \u00B7 totale \u20AC")}><input type="number" min="0" max="1000000" step="0.01" value={selection.deliveryCents / 100} onChange={e => change('deliveryCents', Math.round(Number(e.target.value) * 100))}/></Field><Field label={t("Sconto prodotti %")}><input type="number" min="0" max="50" step="0.1" value={selection.discountBasisPoints / 100} onChange={e => change('discountBasisPoints', Math.round(Number(e.target.value) * 100))}/></Field></div>)}<Field label={t("Note del progetto")}><textarea rows={3} maxLength={3000} placeholder={t("Esigenze particolari, dettagli da confermare\u2026")} value={client.notes} onChange={e => setClient({ ...client, notes: e.target.value })}/></Field></section>
+          </div><aside className="summary-wrap"><section className="summary-card"><div className="summary-title"><ClipboardList size={19}/><h2>{localize("Il tuo progetto")}</h2><span className="live-label"><i />{localize(" LIVE")}</span></div><div className="summary-product"><span className="eyebrow">{localize(category?.name)}</span><h3>{localize(product.name)}</h3><p>{localize(product.type === 'fixed' ? calculation.variantLabel : `${selection.widthCm} × ${selection.depthCm} cm · ${selection.quantity} ${selection.quantity === 1 ? 'pezzo' : 'pezzi'}`)}</p><span>{localize(calculation.colorLabel)}</span></div><div className="summary-lines">{localize(calculation.lines.map((line, i) => <div key={i}><span>{localize(line.label)}</span><strong>{localize(euro(line.cents))}</strong></div>))}{localize(!calculation.available && <p className="small muted">{localize("Completa una configurazione valida per calcolare il prezzo.")}</p>)}</div><div className="summary-tax"><div><span>{localize("Imponibile")}</span><strong>{localize(euro(calculation.subtotalCents))}</strong></div><div><span>{localize("IVA ")}{localize(workspace.company.vatBasisPoints / 100)}{localize("%")}</span><span>{localize(euro(calculation.vatCents))}</span></div></div><div className="summary-total"><span>{localize("Totale progetto")}<small>{localize("IVA inclusa")}</small></span><strong>{localize(calculation.available ? euro(calculation.totalCents) : '—')}</strong></div>
+              {localize(calculation.errors.map((e, i) => <div className="notice danger" key={i}><TriangleAlert size={15}/><span>{localize(e)}</span></div>))}{localize(calculation.warnings.map((w, i) => <div className="notice" key={i}><CircleHelp size={15}/><span>{localize(w)}</span></div>))}
+              <button className="primary full" disabled={busy || !calculation.available} onClick={() => void saveQuote(false)}>{localize(busy ? <LoaderCircle className="spin" size={17}/> : <FilePlus2 size={17}/>)} {localize(calculation.issuable ? (publicMode ? 'Salva progetto e PDF' : 'Salva bozza') : 'Richiedi verifica')}<ArrowRight size={16}/></button>
+              {localize(!publicMode && calculation.issuable && <button className="secondary full" disabled={busy} onClick={() => void saveQuote(true)}><FileCheck2 size={16}/>{localize(" Emetti preventivo")}</button>)}
+              <div className="summary-foot"><ShieldCheck size={14}/><span>{localize(publicMode ? 'I tuoi progetti sono visibili solo da questo browser.' : 'Salvataggio nell’archivio condiviso.')}<br />{localize("PDF disponibile dopo il salvataggio.")}</span></div></section><div className="source-card"><BookOpen size={19}/><div><strong>{localize("Un prezzo, una fonte.")}</strong><p>{localize("Tabelle e condizioni dal catalogo originale. Nessun prezzo interpolato.")}</p><Source pages={variant ? [variant.page] : product.pages}/></div></div><div className="ai-mini"><ImageOff size={20}/><span>{localize("Visualizzazione AI")}<small>{localize("Funzione temporaneamente non disponibile")}</small></span><LockKeyhole size={13}/></div></aside></div>
+        </>)}
+        {tab === 'history' && <>
+          <div className="page-heading"><div><span className="eyebrow">{localize("DAL PROGETTO ALL\u2019ORDINE")}</span><h1>{localize("I tuoi ")}<em>{localize("preventivi.")}</em></h1><p>{localize(publicMode ? 'I tuoi progetti salvati. Conserva i cookie di questo browser per ritrovarli.' : 'Progetti, clienti e offerte. Tutto ritrovabile, anche da un altro dispositivo.')}</p></div><button className="primary" onClick={() => { setTab('config'); setOpened(null); }}><Plus size={17}/>{localize(" Nuovo progetto")}</button></div>
+          {opened ? <section className="card quote-detail"><div className="quote-toolbar"><button className="text-link" onClick={() => setOpened(null)}><ArrowLeft size={16}/>{localize(" Torna all\u2019archivio")}</button><div><a className="secondary" href={`${apiPrefix}/quotes/${opened.id}/pdf?lang=${locale}`}><ArrowDownToLine size={16}/>{localize(" Scarica PDF")}</a><button className="secondary" onClick={() => { const p = workspace.catalog.products.find(p => p.id === opened.snapshot.selection.productId); if (!p) {
+                setError('Il prodotto non è più disponibile nel catalogo.');
+                return;
+            } setSelection(opened.snapshot.selection); setClient(opened.snapshot.client); setTab('config'); setOpened(null); setToast('Progetto duplicato. Prezzi ricalcolati sul catalogo attuale.'); }}><Copy size={16}/>{localize(" Duplica e ricalcola")}</button></div></div><div className="quote-paper"><div className="quote-letterhead"><div className="brand-name">{opened.snapshot.company.name}<span>{localize(".")}</span></div><div><Status status={opened.status}/><h2>{localize(opened.number)}</h2><p>{localize(date(opened.createdAt))}</p></div></div><div className="quote-addresses"><div><span className="eyebrow">{localize("PREPARATO PER")}</span><h3>{opened.snapshot.client.name}</h3><p>{opened.snapshot.client.address}</p><p>{opened.snapshot.client.email} {opened.snapshot.client.phone}</p></div><div><span className="eyebrow">{localize("IL TUO PROGETTO")}</span><h3>{localize(opened.snapshot.calculation.productName)}</h3><p>{localize(opened.snapshot.calculation.variantLabel)}</p><p>{localize(opened.snapshot.selection.widthCm)}{localize(" \u00D7 ")}{localize(opened.snapshot.selection.depthCm)}{localize(" cm \u00B7 ")}{localize(opened.snapshot.calculation.colorLabel)}</p></div></div><div className="quote-line-table"><div className="quote-table-head"><span>{localize("Descrizione")}</span><span>{localize("Quantit\u00E0")}</span><span>{localize("Importo")}</span></div>{localize(opened.snapshot.calculation.lines.map((l, i) => <div key={i}><span>{localize(l.label)}{localize(l.page && <small>{localize("Listino p. ")}{localize(l.page)}</small>)}</span><span>{localize(l.quantity)}</span><strong>{localize(euro(l.cents))}</strong></div>))}</div><div className="quote-totals"><div><span>{localize("Imponibile")}</span><strong>{localize(euro(opened.snapshot.calculation.subtotalCents))}</strong></div><div><span>{localize("IVA ")}{localize(opened.snapshot.company.vatBasisPoints / 100)}{localize("%")}</span><strong>{localize(euro(opened.snapshot.calculation.vatCents))}</strong></div><div className="final"><span>{localize("Totale")}</span><strong>{localize(euro(opened.snapshot.calculation.totalCents))}</strong></div></div>{localize(opened.status === 'review' || opened.status === 'draft' ? <div className="notice"><TriangleAlert size={17}/><span>{localize(opened.status === 'review' ? 'Richiesta di verifica tecnica e commerciale.' : 'Bozza di progetto.')}{localize(" Questo documento non costituisce un\u2019offerta.")}</span></div> : null)}{opened.snapshot.client.notes && <p className="quote-note">{opened.snapshot.client.notes}</p>}<div className="quote-terms"><p>{localize("Valido fino al ")}{localize(date(opened.snapshot.validUntil))}{localize(".")}</p><p>{localize(opened.snapshot.company.terms)}</p><Source pages={opened.snapshot.calculation.pages}/></div></div><div className="quote-actions">{localize(opened.status === 'issued' && <button className="primary" disabled={busy} onClick={() => void updateQuote('accepted')}><BadgeCheck size={17}/>{localize(" Registra conferma cliente")}</button>)}{localize(!['accepted', 'cancelled'].includes(opened.status) && <button className="secondary" disabled={busy} onClick={() => void updateQuote('cancelled')}>{localize("Annulla documento")}</button>)}<p>{localize("La conferma registra l\u2019ordine internamente. Non invia dati al produttore.")}</p></div></section> : <><div className="archive-stats"><div><FileText /><span>{localize("Documenti in archivio")}<strong>{localize(quotes.length)}</strong></span></div><div><FileCheck2 /><span>{localize("Preventivi emessi")}<strong>{localize(quotes.filter(q => q.status === 'issued').length)}</strong></span></div><div><BadgeCheck /><span>{localize("Confermati")}<strong>{localize(quotes.filter(q => q.status === 'accepted').length)}</strong></span></div></div><section className="card archive-card"><div className="archive-controls"><div className="search-box"><Search size={17}/><input aria-label={t("Cerca preventivi")} placeholder={t("Cerca per cliente, modello o numero\u2026")} value={search} onChange={e => setSearch(e.target.value)}/></div><select aria-label={t("Filtra per stato")} value={filter} onChange={e => setFilter(e.target.value)}><option value="all">{localize("Tutti gli stati")}</option>{localize(Object.entries(statusLabels).map(([id, label]) => <option value={id} key={id}>{localize(label)}</option>))}</select></div>{quotesLoading ? <div className="empty-state"><LoaderCircle className="spin"/><p>{localize("Caricamento archivio\u2026")}</p></div> : !visibleQuotes.length ? <div className="empty-state"><FolderOpen size={40}/><h2>{localize(quotes.length ? 'Nessun risultato' : 'Il primo progetto ti aspetta.')}</h2><p>{localize(quotes.length ? 'Prova a modificare la ricerca.' : 'Configura un prodotto e salva il tuo primo preventivo.')}</p><button className="secondary" onClick={() => setTab('config')}>{localize("Apri configuratore ")}<ArrowRight size={15}/></button></div> : <div className="archive-table"><div className="archive-table-head"><span>{localize("Documento / cliente")}</span><span>{localize("Progetto")}</span><span>{localize("Stato")}</span><span>{localize("Totale")}</span><span /></div>{visibleQuotes.map(q => <button className="archive-row" key={q.id} onClick={() => setOpened(q)}><span><strong>{localize(q.number)}</strong><small>{q.snapshot.client.name}</small></span><span>{localize(q.snapshot.calculation.productName)}<small>{localize(date(q.createdAt))}</small></span><span><Status status={q.status}/></span><strong>{localize(euro(q.snapshot.calculation.totalCents))}</strong><ChevronRight size={17}/></button>)}</div>}<div className="archive-footer">{localize("Ultimi 200 documenti \u00B7 I prezzi salvati restano invariati dopo gli aggiornamenti del catalogo.")}</div></section></>}
         </>}
-        {tab==='history'&&<>
-          <div className="page-heading"><div><span className="eyebrow">DAL PROGETTO ALL’ORDINE</span><h1>I tuoi <em>preventivi.</em></h1><p>{publicMode?'I tuoi progetti salvati. Conserva i cookie di questo browser per ritrovarli.':'Progetti, clienti e offerte. Tutto ritrovabile, anche da un altro dispositivo.'}</p></div><button className="primary" onClick={()=>{setTab('config');setOpened(null);}}><Plus size={17}/> Nuovo progetto</button></div>
-          {opened?<section className="card quote-detail"><div className="quote-toolbar"><button className="text-link" onClick={()=>setOpened(null)}><ArrowLeft size={16}/> Torna all’archivio</button><div><a className="secondary" href={`${apiPrefix}/quotes/${opened.id}/pdf`}><ArrowDownToLine size={16}/> Scarica PDF</a><button className="secondary" onClick={()=>{const p=workspace.catalog.products.find(p=>p.id===opened.snapshot.selection.productId);if(!p){setError('Il prodotto non è più disponibile nel catalogo.');return;}setSelection(opened.snapshot.selection);setClient(opened.snapshot.client);setTab('config');setOpened(null);setToast('Progetto duplicato. Prezzi ricalcolati sul catalogo attuale.');}}><Copy size={16}/> Duplica e ricalcola</button></div></div><div className="quote-paper"><div className="quote-letterhead"><div className="brand-name">{opened.snapshot.company.name}<span>.</span></div><div><Status status={opened.status}/><h2>{opened.number}</h2><p>{date(opened.createdAt)}</p></div></div><div className="quote-addresses"><div><span className="eyebrow">PREPARATO PER</span><h3>{opened.snapshot.client.name}</h3><p>{opened.snapshot.client.address}</p><p>{opened.snapshot.client.email} {opened.snapshot.client.phone}</p></div><div><span className="eyebrow">IL TUO PROGETTO</span><h3>{opened.snapshot.calculation.productName}</h3><p>{opened.snapshot.calculation.variantLabel}</p><p>{opened.snapshot.selection.widthCm} × {opened.snapshot.selection.depthCm} cm · {opened.snapshot.calculation.colorLabel}</p></div></div><div className="quote-line-table"><div className="quote-table-head"><span>Descrizione</span><span>Quantità</span><span>Importo</span></div>{opened.snapshot.calculation.lines.map((l,i)=><div key={i}><span>{l.label}{l.page&&<small>Listino p. {l.page}</small>}</span><span>{l.quantity}</span><strong>{euro(l.cents)}</strong></div>)}</div><div className="quote-totals"><div><span>Imponibile</span><strong>{euro(opened.snapshot.calculation.subtotalCents)}</strong></div><div><span>IVA {opened.snapshot.company.vatBasisPoints/100}%</span><strong>{euro(opened.snapshot.calculation.vatCents)}</strong></div><div className="final"><span>Totale</span><strong>{euro(opened.snapshot.calculation.totalCents)}</strong></div></div>{opened.status==='review'||opened.status==='draft'?<div className="notice"><TriangleAlert size={17}/><span>{opened.status==='review'?'Richiesta di verifica tecnica e commerciale.':'Bozza di progetto.'} Questo documento non costituisce un’offerta.</span></div>:null}{opened.snapshot.client.notes&&<p className="quote-note">{opened.snapshot.client.notes}</p>}<div className="quote-terms"><p>Valido fino al {date(opened.snapshot.validUntil)}.</p><p>{opened.snapshot.company.terms}</p><Source pages={opened.snapshot.calculation.pages}/></div></div><div className="quote-actions">{opened.status==='issued'&&<button className="primary" disabled={busy} onClick={()=>void updateQuote('accepted')}><BadgeCheck size={17}/> Registra conferma cliente</button>}{!['accepted','cancelled'].includes(opened.status)&&<button className="secondary" disabled={busy} onClick={()=>void updateQuote('cancelled')}>Annulla documento</button>}<p>La conferma registra l’ordine internamente. Non invia dati al produttore.</p></div></section>:<><div className="archive-stats"><div><FileText/><span>Documenti in archivio<strong>{quotes.length}</strong></span></div><div><FileCheck2/><span>Preventivi emessi<strong>{quotes.filter(q=>q.status==='issued').length}</strong></span></div><div><BadgeCheck/><span>Confermati<strong>{quotes.filter(q=>q.status==='accepted').length}</strong></span></div></div><section className="card archive-card"><div className="archive-controls"><div className="search-box"><Search size={17}/><input aria-label="Cerca preventivi" placeholder="Cerca per cliente, modello o numero…" value={search} onChange={e=>setSearch(e.target.value)}/></div><select aria-label="Filtra per stato" value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">Tutti gli stati</option>{Object.entries(statusLabels).map(([id,label])=><option value={id} key={id}>{label}</option>)}</select></div>{quotesLoading?<div className="empty-state"><LoaderCircle className="spin"/><p>Caricamento archivio…</p></div>:!visibleQuotes.length?<div className="empty-state"><FolderOpen size={40}/><h2>{quotes.length?'Nessun risultato':'Il primo progetto ti aspetta.'}</h2><p>{quotes.length?'Prova a modificare la ricerca.':'Configura un prodotto e salva il tuo primo preventivo.'}</p><button className="secondary" onClick={()=>setTab('config')}>Apri configuratore <ArrowRight size={15}/></button></div>:<div className="archive-table"><div className="archive-table-head"><span>Documento / cliente</span><span>Progetto</span><span>Stato</span><span>Totale</span><span/></div>{visibleQuotes.map(q=><button className="archive-row" key={q.id} onClick={()=>setOpened(q)}><span><strong>{q.number}</strong><small>{q.snapshot.client.name}</small></span><span>{q.snapshot.calculation.productName}<small>{date(q.createdAt)}</small></span><span><Status status={q.status}/></span><strong>{euro(q.snapshot.calculation.totalCents)}</strong><ChevronRight size={17}/></button>)}</div>}<div className="archive-footer">Ultimi 200 documenti · I prezzi salvati restano invariati dopo gli aggiornamenti del catalogo.</div></section></>}
+        {localize(tab === 'ai' && <><div className="page-heading"><div><span className="eyebrow">{localize("UNO SGUARDO AL FUTURO")}</span><h1>{localize("Immagina ")}<em>{localize("il risultato.")}</em></h1><p>{localize("Il tuo progetto, nel suo contesto.")}</p></div></div><section className="ai-page card"><div className="ai-image"><img src="/catalog/pergole.webp" alt={t("Pergoltenda IC Tende in uno spazio esterno")}/><span><LockKeyhole size={22}/></span></div><div className="ai-content"><span className="coming-soon"><Sparkles size={14}/>{localize(" PROSSIMAMENTE")}</span><h2>{localize("Una foto.")}<br />{localize("Nuove possibilit\u00E0.")}</h2><p>{localize("L\u2019analisi dello spazio e la visualizzazione del progetto con intelligenza artificiale saranno disponibili in una prossima versione.")}</p><div className="notice"><ImageOff size={18}/><span>{localize("Funzione temporaneamente non disponibile. Il caricamento delle foto e la generazione di immagini sono disattivati.")}</span></div><button className="primary" disabled><LockKeyhole size={16}/>{localize(" Analisi e visualizzazione non disponibili")}</button><button className="text-link" onClick={() => setTab('config')}>{localize("Continua con il configuratore ")}<ArrowRight size={15}/></button></div></section></>)}
+        {!publicMode && tab === 'admin' && <><div className="page-heading"><div><span className="eyebrow">{localize("IL TUO STRUMENTO DI LAVORO")}</span><h1>{localize("Catalogo e ")}<em>{localize("impostazioni.")}</em></h1><p>{localize("Identit\u00E0 aziendale, dati di listino e controllo delle configurazioni.")}</p></div><span className="admin-lock"><LockKeyhole size={15}/>{localize(" Area riservata")}</span></div><div className="admin-layout"><div><form className="card section-pad" onSubmit={e => { e.preventDefault(); void adminSave({ company: companyDraft }); }}><SectionTitle n="01" title={t("La tua attivit\u00E0")}/><div className="field-grid">{localize(([['name', 'Ragione sociale *'], ['vatNumber', 'Partita IVA'], ['address', 'Indirizzo'], ['email', 'Email'], ['phone', 'Telefono']] as const).map(([key, label]) => <Field key={key} label={t(label)}><input required={key === 'name'} type={key === 'email' ? 'email' : 'text'} maxLength={500} value={companyDraft[key]} onChange={e => setCompanyDraft({ ...companyDraft, [key]: e.target.value })}/></Field>))}<Field label={t("Validit\u00E0 preventivo \u00B7 giorni")}><input type="number" min="1" max="365" value={companyDraft.validityDays} onChange={e => setCompanyDraft({ ...companyDraft, validityDays: Number(e.target.value) })}/></Field><Field label={t("IVA %")}><input type="number" min="0" max="30" step="0.1" value={companyDraft.vatBasisPoints / 100} onChange={e => setCompanyDraft({ ...companyDraft, vatBasisPoints: Math.round(Number(e.target.value) * 100) })}/></Field></div><Field label={t("Condizioni del preventivo")}><textarea rows={4} maxLength={4000} value={companyDraft.terms} onChange={e => setCompanyDraft({ ...companyDraft, terms: e.target.value })}/></Field><button className="primary" disabled={busy}><Check size={16}/>{localize(" Salva impostazioni")}</button><p className="muted small">{localize("Completa i dati fiscali e un recapito prima di emettere offerte.")}</p></form><section className="card section-pad"><SectionTitle n="02" title={t("Controllo dei modelli")}/><Field label={t("Modello da verificare")}><select value={reviewId} onChange={e => { setReviewId(e.target.value); const p = workspace.catalog.products.find(p => p.id === e.target.value); setReviewStatus(workspace.reviews[e.target.value]?.status ?? p?.review ?? 'pending'); setReviewNote(workspace.reviews[e.target.value]?.note ?? ''); }}>{localize(workspace.catalog.products.map(p => <option value={p.id} key={p.id}>{localize(p.name)}{localize(" \u00B7 ")}{localize((workspace.reviews[p.id]?.status ?? p.review) === 'checked' ? 'controllato' : 'da verificare')}</option>))}</select></Field><div className="notice"><CircleHelp size={17}/><span>{localize("Confronta tabelle, colori, minimi e limiti tecnici con il PDF originale. Un\u2019approvazione abilita l\u2019emissione per le configurazioni ordinarie del modello.")}</span></div><Field label={t("Esito della verifica")}><select value={reviewStatus} onChange={e => setReviewStatus(e.target.value as 'checked' | 'pending')}><option value="pending">{localize("Da verificare \u00B7 emissione bloccata")}</option><option value="checked">{localize("Controllato \u00B7 emissione consentita")}</option></select></Field><Field label={t("Nota di verifica *")}><textarea rows={3} minLength={10} maxLength={500} placeholder={t("Indica pagine controllate, correzioni e condizioni confermate\u2026")} value={reviewNote} onChange={e => setReviewNote(e.target.value)}/></Field><button className="secondary" disabled={busy || reviewNote.trim().length < 10} onClick={() => void adminSave({ review: { productId: reviewId, status: reviewStatus, note: reviewNote } })}><ShieldCheck size={16}/>{localize(" Registra verifica")}</button></section></div><aside><section className="card section-pad"><div className="catalog-admin-heading"><BookOpen size={26}/><span>{localize("CATALOGO ATTIVO")}</span></div><h2>{localize("IC Tende 2023")}</h2><p className="muted">{localize("Un catalogo strutturato, con una fonte per ogni prezzo.")}</p><div className="catalog-numbers"><div><strong>{localize(workspace.catalog.products.length)}</strong><span>{localize("prodotti")}</span></div><div><strong>{localize(workspace.catalog.categories.length)}</strong><span>{localize("famiglie")}</span></div><div><strong>{localize(verified)}</strong><span>{localize("controllati")}</span></div></div><div className="catalog-family-list">{localize(workspace.catalog.categories.map(c => <div key={c.id}><span>{localize(c.name)}</span><strong>{localize(workspace.catalog.products.filter(p => p.categoryId === c.id).length)}</strong></div>))}</div><button className="secondary full" onClick={exportCatalog}><ArrowDownToLine size={16}/>{localize(" Esporta catalogo JSON")}</button><input ref={importRef} type="file" accept=".json,application/json" hidden onChange={e => void importCatalog(e.target.files?.[0])}/><button className="secondary full" disabled={busy} onClick={() => importRef.current?.click()}><Plus size={16}/>{localize(" Sostituisci catalogo JSON")}</button><p className="small muted">{localize("L\u2019import sostituisce il catalogo attivo e azzera le verifiche manuali. I documenti gi\u00E0 salvati mantengono prezzi e dati originali.")}</p><details className="technical-notes"><summary>{localize("Origine e versione ")}<ChevronDown size={14}/></summary><p>{workspace.catalog.source.name}</p><p>{workspace.catalog.version}</p><p className="source-hash">{localize("SHA-256 ")}{localize(workspace.catalog.source.sha256)}</p></details></section><div className="source-card"><ShieldCheck size={22}/><p>{localize("Le funzioni AI sono disabilitate. Nessuna fotografia viene caricata o inviata a servizi esterni.")}</p></div></aside></div></>}
         </>}
-        {tab==='ai'&&<><div className="page-heading"><div><span className="eyebrow">UNO SGUARDO AL FUTURO</span><h1>Immagina <em>il risultato.</em></h1><p>Il tuo progetto, nel suo contesto.</p></div></div><section className="ai-page card"><div className="ai-image"><img src="/catalog/pergole.webp" alt="Pergoltenda IC Tende in uno spazio esterno"/><span><LockKeyhole size={22}/></span></div><div className="ai-content"><span className="coming-soon"><Sparkles size={14}/> PROSSIMAMENTE</span><h2>Una foto.<br/>Nuove possibilità.</h2><p>L’analisi dello spazio e la visualizzazione del progetto con intelligenza artificiale saranno disponibili in una prossima versione.</p><div className="notice"><ImageOff size={18}/><span>Funzione temporaneamente non disponibile. Il caricamento delle foto e la generazione di immagini sono disattivati.</span></div><button className="primary" disabled><LockKeyhole size={16}/> Analisi e visualizzazione non disponibili</button><button className="text-link" onClick={()=>setTab('config')}>Continua con il configuratore <ArrowRight size={15}/></button></div></section></>}
-        {!publicMode&&tab==='admin'&&<><div className="page-heading"><div><span className="eyebrow">IL TUO STRUMENTO DI LAVORO</span><h1>Catalogo e <em>impostazioni.</em></h1><p>Identità aziendale, dati di listino e controllo delle configurazioni.</p></div><span className="admin-lock"><LockKeyhole size={15}/> Area riservata</span></div><div className="admin-layout"><div><form className="card section-pad" onSubmit={e=>{e.preventDefault();void adminSave({company:companyDraft});}}><SectionTitle n="01" title="La tua attività"/><div className="field-grid">{([['name','Ragione sociale *'],['vatNumber','Partita IVA'],['address','Indirizzo'],['email','Email'],['phone','Telefono']] as const).map(([key,label])=><Field key={key} label={label}><input required={key==='name'} type={key==='email'?'email':'text'} maxLength={500} value={companyDraft[key]} onChange={e=>setCompanyDraft({...companyDraft,[key]:e.target.value})}/></Field>)}<Field label="Validità preventivo · giorni"><input type="number" min="1" max="365" value={companyDraft.validityDays} onChange={e=>setCompanyDraft({...companyDraft,validityDays:Number(e.target.value)})}/></Field><Field label="IVA %"><input type="number" min="0" max="30" step="0.1" value={companyDraft.vatBasisPoints/100} onChange={e=>setCompanyDraft({...companyDraft,vatBasisPoints:Math.round(Number(e.target.value)*100)})}/></Field></div><Field label="Condizioni del preventivo"><textarea rows={4} maxLength={4000} value={companyDraft.terms} onChange={e=>setCompanyDraft({...companyDraft,terms:e.target.value})}/></Field><button className="primary" disabled={busy}><Check size={16}/> Salva impostazioni</button><p className="muted small">Completa i dati fiscali e un recapito prima di emettere offerte.</p></form><section className="card section-pad"><SectionTitle n="02" title="Controllo dei modelli"/><Field label="Modello da verificare"><select value={reviewId} onChange={e=>{setReviewId(e.target.value);const p=workspace.catalog.products.find(p=>p.id===e.target.value);setReviewStatus(workspace.reviews[e.target.value]?.status??p?.review??'pending');setReviewNote(workspace.reviews[e.target.value]?.note??'');}}>{workspace.catalog.products.map(p=><option value={p.id} key={p.id}>{p.name} · {(workspace.reviews[p.id]?.status??p.review)==='checked'?'controllato':'da verificare'}</option>)}</select></Field><div className="notice"><CircleHelp size={17}/><span>Confronta tabelle, colori, minimi e limiti tecnici con il PDF originale. Un’approvazione abilita l’emissione per le configurazioni ordinarie del modello.</span></div><Field label="Esito della verifica"><select value={reviewStatus} onChange={e=>setReviewStatus(e.target.value as 'checked'|'pending')}><option value="pending">Da verificare · emissione bloccata</option><option value="checked">Controllato · emissione consentita</option></select></Field><Field label="Nota di verifica *"><textarea rows={3} minLength={10} maxLength={500} placeholder="Indica pagine controllate, correzioni e condizioni confermate…" value={reviewNote} onChange={e=>setReviewNote(e.target.value)}/></Field><button className="secondary" disabled={busy||reviewNote.trim().length<10} onClick={()=>void adminSave({review:{productId:reviewId,status:reviewStatus,note:reviewNote}})}><ShieldCheck size={16}/> Registra verifica</button></section></div><aside><section className="card section-pad"><div className="catalog-admin-heading"><BookOpen size={26}/><span>CATALOGO ATTIVO</span></div><h2>IC Tende 2023</h2><p className="muted">Un catalogo strutturato, con una fonte per ogni prezzo.</p><div className="catalog-numbers"><div><strong>{workspace.catalog.products.length}</strong><span>prodotti</span></div><div><strong>{workspace.catalog.categories.length}</strong><span>famiglie</span></div><div><strong>{verified}</strong><span>controllati</span></div></div><div className="catalog-family-list">{workspace.catalog.categories.map(c=><div key={c.id}><span>{c.name}</span><strong>{workspace.catalog.products.filter(p=>p.categoryId===c.id).length}</strong></div>)}</div><button className="secondary full" onClick={exportCatalog}><ArrowDownToLine size={16}/> Esporta catalogo JSON</button><input ref={importRef} type="file" accept=".json,application/json" hidden onChange={e=>void importCatalog(e.target.files?.[0])}/><button className="secondary full" disabled={busy} onClick={()=>importRef.current?.click()}><Plus size={16}/> Sostituisci catalogo JSON</button><p className="small muted">L’import sostituisce il catalogo attivo e azzera le verifiche manuali. I documenti già salvati mantengono prezzi e dati originali.</p><details className="technical-notes"><summary>Origine e versione <ChevronDown size={14}/></summary><p>{workspace.catalog.source.name}</p><p>{workspace.catalog.version}</p><p className="source-hash">SHA-256 {workspace.catalog.source.sha256}</p></details></section><div className="source-card"><ShieldCheck size={22}/><p>Le funzioni AI sono disabilitate. Nessuna fotografia viene caricata o inviata a servizi esterni.</p></div></aside></div></>}
-        </>}
-        <footer className="main-footer"><span>Pergola<span className="brand-dot">.</span> <span>Il progetto comincia da qui.</span></span><span>Catalogo IC Tende · Edizione 2023</span></footer>
+        <footer className="main-footer"><span>{localize("Pergola")}<span className="brand-dot">{localize(".")}</span> <span>{localize("Il progetto comincia da qui.")}</span></span><span>{localize("Catalogo IC Tende \u00B7 Edizione 2023")}</span></footer>
       </main>
     </div>
-    {toast&&<div className="toast" role="status"><Check size={17}/>{toast}<button aria-label="Chiudi notifica" onClick={()=>setToast('')}><X size={16}/></button></div>}
+    {localize(toast && <div className="toast" role="status"><Check size={17}/>{localize(toast)}<button aria-label={t("Chiudi notifica")} onClick={() => setToast('')}><X size={16}/></button></div>)}
   </div>;
 }

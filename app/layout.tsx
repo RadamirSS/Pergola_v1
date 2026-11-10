@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { I18nProvider } from '../lib/i18n/provider';
 
 export const metadata: Metadata = {
   title: "Pergola — Configuratore IC Tende",
@@ -17,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><I18nProvider>{children}</I18nProvider></body>
     </html>
   );
 }
